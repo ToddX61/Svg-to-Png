@@ -4,7 +4,7 @@
 
 # Svg to Png
 
-*Svg to Png* is a project editor for converting svg files to texture atlases.  *Svg to Png* doesn't do the actual conversions, but rather can run command line tools like **rsvg-convert**, **inkscape** or any executalbe that can converts svg images to png via a bash shell command.
+*Svg to Png* is a project editor for converting svg files to texture atlases.  *Svg to Png* doesn't do the actual conversions, but rather can run command line tools like **rsvg-convert**, **inkscape** or any executalbe that converts svg images to png via a bash shell command.
  
 ## Requirements
 
