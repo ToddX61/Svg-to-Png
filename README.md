@@ -52,9 +52,9 @@ Although you can't modify the predefined commands, you can edit the custom ones.
 
 ## A note on 'rasterized' svg files
 
-When I first started on this project, I was very ignorant about svg files. To me: "They're vector files that can be resized and mantain the integrity of the image.
+When I first started on this project, I was very ignorant about svg files. To me: "They're vector files that can be resized and mantain the integrity of the image."
 
-A used a lot of svg samples from different sources. But some stubbornly resisted scaling well. "Why does my scaled file look like a raster image?" After many wasted hours, I found out why. They **are** raster images. Embedded in the SVG file. D'oh!
+I tested a lot of svg samples from different sources. But some stubbornly resisted scaling smoothly: "Why does my scaled file look like a raster image?" After many wasted hours, I found out why. They **are** raster images. Embedded in the SVG file. D'oh!
 
 If your svg file (opened in a text editor) contains something like: 
 
