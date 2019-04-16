@@ -4,13 +4,13 @@
 
 # Svg to Png
 
-*Svg to Png* is a project editor for converting svg files to texture atlases.  *Svg to Png* doesn't do the actual conversions, but rather can run command line tools like **rsvg-convert**, **inkscape** or any executalbe that converts svg images to png via a bash shell command.
+*Svg to Png* is a project editor for converting svg files to texture atlases.  *Svg to Png* doesn't do the actual conversions, but rather runs command line tools like **rsvg-convert**, **inkscape** or any executalbe that can converts svg images to png via a bash shell command.
  
 ## Requirements
 
 * macOS 10.11 or greater. *(Svg to Png supports Mojave's dark mode)*
 
-## Install SVG Converters
+## Install svg converters
 *Svg to Png* comes pre-configured with support for:
 
 * rsvg-convert (**[librsrg](https://github.com/GNOME/librsvg)**). Install librsvg on your mac with [Homebrew](https://brew.sh): `brew install librsvg`
@@ -30,12 +30,12 @@
     * select resolutions to include: 1x, 2x, 3x.
 * Save the project.  *Svg to Png* saves to  a *.svgproj* file.
 
-## Selecting an export command
+## Selecting a different export command
 
 * From the *Project* menu, select the *Export Commands* option.
 * Click on the checkbox (in the *Default* column) of the command you'd like to use for the project
 
-## Adding/Modifying Export Commands
+## Adding, modifying export commands
 
 You add add new commands by clicking the **'+'** button in the *ExportCommands* window, then modifying the bash shell command line in the bottom half of that window.
 
@@ -50,7 +50,22 @@ When adding commands, variables are available that will be replaced with the cor
 
 Although you can't modify the predefined commands, you can edit the custom ones.
 
-## Possible Enchancements
+## A note on 'rasterized' svg files
+
+When I first started on this project, I was very ignorant about svg files. To me: "They're vector files that can be resized and mantain the integrity of the image.
+
+A used a lot of svg samples from different sources. But some stubbornly resisted scaling well. "Why does my scaled file look like a raster image?" After many wasted hours, I found out why. They **are** raster images. Embedded in the SVG file. D'oh!
+
+If your svg file (opened in a text editor) contains something like: 
+
+`<image id="mine" width="28px" height="32px" xlink:href="data:image png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAg.....>`
+
+... then, some of the elements in your svg have been rasterized. They will not scale smoothly. Why?
+
+* A raster image was inserted into the svg file.
+* The vector drawing tool used create the svg was unable to transform an effect because there was no equivalant in the svg specification.
+
+## Possible enchancements
 
 What started as a small (or so I thought) experiment, became way more involved than I planned. Yet still, there are many possible enhancements that could be added. Issue a pull request and go for it.
 

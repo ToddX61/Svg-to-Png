@@ -1,10 +1,3 @@
-//
-//  AppDelegate.swift
-//  Svg to Png
-//
-//  Created by Todd Denlinger on 2/21/19.
-//  Copyright © 2019 Todd. All rights reserved.
-//
 
 import Cocoa
 
