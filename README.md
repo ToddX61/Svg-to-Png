@@ -63,7 +63,7 @@ If your svg file (opened in a text editor) contains something like:
 ... then, some of the elements in your svg have been rasterized. They will not scale smoothly. Why?
 
 * A raster image was inserted into the svg file.
-* The vector drawing tool used create the svg was unable to transform an effect because there was no equivalant in the svg specification.
+* The vector drawing tool used to create the svg was unable to transform an effect because there was no equivalant in the svg specification.
 
 ## Possible enchancements
 
