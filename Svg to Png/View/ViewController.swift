@@ -68,9 +68,9 @@ class ViewController: NSViewController {
             outlineView.expandItem(_Indices(atlas: idx))
         }
     }
-    
+
     override func viewDidAppear() {
-        self.view.window?.styleMask.remove(NSWindow.StyleMask.resizable)
+        view.window?.styleMask.remove(NSWindow.StyleMask.resizable)
     }
 
     override func keyDown(with theEvent: NSEvent) {
@@ -352,13 +352,6 @@ class ViewController: NSViewController {
         let atlas = prj.atlases[indices.atlas]
 
         if indices.svg != _Indices.None {
-//
-            let exportFile = ExportFile.create(atlas: atlas, svgFile: atlas.svgFiles[indices.svg])
-            let parser = SvgParser(svgURL: exportFile[1].inputURL!) { parser in
-                debugLog("Parsing finished")
-            }
-            parser?.parse()
-
             ExportManager.export(atlas: atlas, svgFile: atlas.svgFiles[indices.svg], completionHander: exportCompletion)
         } else {
             ExportManager.export(atlases: [atlas], completionHander: exportCompletion)
@@ -366,7 +359,6 @@ class ViewController: NSViewController {
     }
 
     lazy var exportCompletion: (String) -> Void = { [weak self] (output: String) -> Void in
-
         guard let self = self else { return }
         self.outputView.append("\(output)\n")
         self.outputView.scrollToEndOfDocument(self)
