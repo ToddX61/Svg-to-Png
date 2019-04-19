@@ -16,7 +16,6 @@
 		DE3CB5722254077C006AFB4A /* ExportCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3CB5712254077C006AFB4A /* ExportCommands.swift */; };
 		DE3CB5752254E459006AFB4A /* ProcessCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3CB5742254E459006AFB4A /* ProcessCommand.swift */; };
 		DE4A78682268938F00FB876C /* SvgParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4A78672268938F00FB876C /* SvgParser.swift */; };
-		DE4A78BA2268DC5800FB876C /* SvgCoordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4A78B92268DC5800FB876C /* SvgCoordinate.swift */; };
 		DE5B648F223FDEE0003AFF06 /* PreferencesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE5B648D223FDEE0003AFF06 /* PreferencesController.swift */; };
 		DE5B6490223FDEE0003AFF06 /* PreferencesController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DE5B648E223FDEE0003AFF06 /* PreferencesController.xib */; };
 		DE70144922577D0900C727A5 /* ExportCommandManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE70144822577D0900C727A5 /* ExportCommandManager.swift */; };
@@ -39,6 +38,7 @@
 		DEC7513022522CF30003F116 /* CommandController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEC7512E22522CF30003F116 /* CommandController.swift */; };
 		DEC7513122522CF30003F116 /* CommandController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DEC7512F22522CF30003F116 /* CommandController.xib */; };
 		DEC8C6A522539948003C3DCC /* ExportCommandMacro.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEC8C6A422539948003C3DCC /* ExportCommandMacro.swift */; };
+		DECCCC84226A178800B1393D /* DoubleToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = DECCCC83226A178800B1393D /* DoubleToken.swift */; };
 		DECE6BE42236A089009590EF /* URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = DECE6BE32236A089009590EF /* URL.swift */; };
 		DECE6BEB2236D44E009590EF /* SwiftTryCatch.m in Sources */ = {isa = PBXBuildFile; fileRef = DECE6BEA2236D44E009590EF /* SwiftTryCatch.m */; };
 		DEECEFEB2220171100A9026F /* NSAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEECEFEA2220171100A9026F /* NSAlert.swift */; };
@@ -55,7 +55,6 @@
 		DE3CB5712254077C006AFB4A /* ExportCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportCommands.swift; sourceTree = "<group>"; };
 		DE3CB5742254E459006AFB4A /* ProcessCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessCommand.swift; sourceTree = "<group>"; };
 		DE4A78672268938F00FB876C /* SvgParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SvgParser.swift; sourceTree = "<group>"; };
-		DE4A78B92268DC5800FB876C /* SvgCoordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SvgCoordinate.swift; sourceTree = "<group>"; };
 		DE5B648D223FDEE0003AFF06 /* PreferencesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesController.swift; sourceTree = "<group>"; };
 		DE5B648E223FDEE0003AFF06 /* PreferencesController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PreferencesController.xib; sourceTree = "<group>"; };
 		DE70144822577D0900C727A5 /* ExportCommandManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportCommandManager.swift; sourceTree = "<group>"; };
@@ -81,6 +80,7 @@
 		DEC7512E22522CF30003F116 /* CommandController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandController.swift; sourceTree = "<group>"; };
 		DEC7512F22522CF30003F116 /* CommandController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CommandController.xib; sourceTree = "<group>"; };
 		DEC8C6A422539948003C3DCC /* ExportCommandMacro.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportCommandMacro.swift; sourceTree = "<group>"; };
+		DECCCC83226A178800B1393D /* DoubleToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleToken.swift; sourceTree = "<group>"; };
 		DECE6BE32236A089009590EF /* URL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URL.swift; sourceTree = "<group>"; };
 		DECE6BE82236D3D7009590EF /* Svg to Png-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Svg to Png-Bridging-Header.h"; sourceTree = "<group>"; };
 		DECE6BE92236D44E009590EF /* SwiftTryCatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwiftTryCatch.h; sourceTree = "<group>"; };
@@ -132,15 +132,14 @@
 			isa = PBXGroup;
 			children = (
 				DE735C1122452135008B4059 /* AtlasArray.swift */,
-				DECCCC81226A164900B1393D /* Export */,
 				DE3CB5742254E459006AFB4A /* ProcessCommand.swift */,
 				DEC03BBB221F25CF00C00B00 /* Project.swift */,
 				DEC03BBC221F25CF00C00B00 /* Resolutions.swift */,
 				DE7293262240259D006E1A4C /* SuppressionKey.swift */,
-				DE4A78B92268DC5800FB876C /* SvgCoordinate.swift */,
-				DE4A78672268938F00FB876C /* SvgParser.swift */,
 				DEC03BAD221F242000C00B00 /* SvgProject.swift */,
+				DECCCC81226A164900B1393D /* Export */,
 				DE207F93223406F40065E7D9 /* Library */,
+				DECCCC82226A16F700B1393D /* SvgParse */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -201,6 +200,15 @@
 				DE993441222C5F0E006A9A0A /* ExportManager.swift */,
 			);
 			path = Export;
+			sourceTree = "<group>";
+		};
+		DECCCC82226A16F700B1393D /* SvgParse */ = {
+			isa = PBXGroup;
+			children = (
+				DE4A78672268938F00FB876C /* SvgParser.swift */,
+				DECCCC83226A178800B1393D /* DoubleToken.swift */,
+			);
+			path = SvgParse;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -287,9 +295,9 @@
 				DEF6739A22295E8A002C47AA /* WindowController.swift in Sources */,
 				DEC03BBE221F25CF00C00B00 /* Resolutions.swift in Sources */,
 				DEC03BAE221F242000C00B00 /* SvgProject.swift in Sources */,
+				DECCCC84226A178800B1393D /* DoubleToken.swift in Sources */,
 				DEC7513022522CF30003F116 /* CommandController.swift in Sources */,
 				DECE6BEB2236D44E009590EF /* SwiftTryCatch.m in Sources */,
-				DE4A78BA2268DC5800FB876C /* SvgCoordinate.swift in Sources */,
 				DE9B31122231EEE900CEECBB /* PathControl.swift in Sources */,
 				DE7DE992222BE3B8009A2345 /* NSTextView.swift in Sources */,
 				DE5B648F223FDEE0003AFF06 /* PreferencesController.swift in Sources */,
