@@ -34,7 +34,7 @@ extension SvgParser: XMLParserDelegate {
     fileprivate func getDouble(_ token: [DoubleToken]?, _ viewBoxValue: Double) -> Double {
         if let token = token, !token.isEmpty, token[0].value > 0 {
             if token[0].isPercentage {
-                return viewBoxValue * token[0].value
+                return viewBoxValue * (token[0].value * 0.01)
             } else {
                 return token[0].value
             }
@@ -61,7 +61,8 @@ extension SvgParser: XMLParserDelegate {
         svgSize.height = CGFloat(getDouble(heightToken, viewBoxHeight))
 
         abortParsing()
-        parserDidEndDocument(self)
+        debugLog("parse complete")
+//        parserDidEndDocument(self)
     }
 
     public func parserDidEndDocument(_: XMLParser) {
@@ -70,7 +71,11 @@ extension SvgParser: XMLParserDelegate {
     }
 
     public func parser(_ parser: XMLParser, parseErrorOccurred parseError: Error) {
-        error = parseError
+        debugLog(parseError)
+        let err = parseError as NSError
+        if err.code != XMLParser.ErrorCode.delegateAbortedParseError.rawValue {
+            error = parseError
+        }
         parserDidEndDocument(self)
     }
 }
