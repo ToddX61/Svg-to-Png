@@ -58,7 +58,7 @@ extension Atlas {
     }
 
     func indexOf(svgFilename: String) -> Int {
-        if let idx = svgFiles.firstIndex(where: { $0.filename == svgFilename }) {
+        if let idx = svgFiles.firstIndex(where: { $0.filename == svgFilename } ) {
             return idx
         }
 
