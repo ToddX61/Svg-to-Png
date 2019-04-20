@@ -272,7 +272,7 @@ class ViewController: NSViewController {
         let folder = url.deletingLastPathComponent()
         let filename = url.lastPathComponent
         let atlasAdded: Bool
-        let svgAdded: Bool
+        var svgAdded: Bool
         let abbreviatedFolder = folder.abbreviatingWithTildeInPath
         var svgIdx: Int
         var output = ""
@@ -297,11 +297,25 @@ class ViewController: NSViewController {
         } else {
             output.append("Adding file: '\(filename)'\n")
 
-            svgAdded = true
             svgIdx = (selected.atlas == atlasIdx
                 ? selected.svg : atlases[atlasIdx].svgFiles.count - 1) + 1
-
-            atlases[atlasIdx].svgFiles.insert(SVGFile(filename: filename), at: svgIdx)
+            
+            svgAdded = true
+            var svgFile = SVGFile(filename: filename)
+            
+            if let parser = SvgParser(svgURL: url) {
+                parser.parse()
+                if let error = parser.error {
+                    output.append("Error parsing \(filename): \(error)")
+                    svgAdded = false
+                } else {
+                    svgFile.width = Int(parser.svgSize.width)
+                    svgFile.height = Int(parser.svgSize.height)
+                }
+            }
+            if svgAdded {
+                atlases[atlasIdx].svgFiles.insert(svgFile, at: svgIdx)
+            }
         }
 
         return AddFileResult(indices: _Indices(atlas: atlasIdx, svg: svgIdx), atlasAdded: atlasAdded, svgAdded: svgAdded, output: output)
