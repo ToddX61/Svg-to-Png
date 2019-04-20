@@ -4,7 +4,7 @@
 
 # Svg to Png
 
-*Svg to Png* is a project editor for converting svg files to texture atlases.  *Svg to Png* doesn't do the actual conversions, but rather runs command line tools like **rsvg-convert**, **inkscape** or any executalbe that can convert svg images to png via a bash shell command.
+*Svg to Png* is a project editor for converting svg files to texture atlases.  *Svg to Png* doesn't do the actual conversions, but rather runs command line tools like **rsvg-convert**, **inkscape** or any executable that can convert svg images to png via a bash shell command.
  
 ## Requirements
 
@@ -52,7 +52,7 @@ Although you can't modify the predefined commands, you can edit the custom ones.
 
 ## A note on 'rasterized' svg files
 
-When I first started on this project, I was very ignorant about svg files. To me: "They're vector files that can be resized and mantain the integrity of the image."
+When I first started on this project, I was very ignorant about svg files. To me: "They're vector files that can be resized and maintain the integrity of the image."
 
 I tested a lot of svg samples from different sources. But some stubbornly resisted scaling smoothly: "Why does my scaled file look like a raster image?" After many wasted hours, I found out why. They **are** raster images. Embedded in the SVG file. D'oh!
 
@@ -65,13 +65,16 @@ If your svg file (opened in a text editor) contains something like:
 * A raster image was inserted into the svg file.
 * The vector drawing tool used to create the svg was unable to transform an effect because there was no equivalant in the svg specification.
 
-## Possible enchancements
+## Possible enhancements
 
 What started as a small (or so I thought) experiment, became way more involved than I planned. Yet still, there are many possible enhancements that could be added. Issue a pull request and go for it.
 
-* Extract viewbox from SVG file when added to project and set width, height in ViewController
 * Change from table cell based outline to a view based one.
 * The default export commands apply to **all** projects. Enhance to saving per project and/or per folder or individual files.
 * Allow multiple selection in the outline view.
 * Ability to set default resolutions to a project or folder
 * Other?
+
+## Completed enhancements
+
+* Extract viewbox from SVG file when added to project and set width, height in ViewController - Completed v1.1.0
