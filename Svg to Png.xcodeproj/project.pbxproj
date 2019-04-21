@@ -27,6 +27,7 @@
 		DE7DE992222BE3B8009A2345 /* NSTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7DE991222BE3B8009A2345 /* NSTextView.swift */; };
 		DE993442222C5F0E006A9A0A /* ExportManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE993441222C5F0E006A9A0A /* ExportManager.swift */; };
 		DE9B31122231EEE900CEECBB /* PathControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9B31112231EEE900CEECBB /* PathControl.swift */; };
+		DEA457D5226D12FE00937067 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEA457D4226D12FE00937067 /* main.swift */; };
 		DEB44DF4222AF2F600C3BD38 /* Bash.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEB44DF3222AF2F600C3BD38 /* Bash.swift */; };
 		DEC03BAA221F242000C00B00 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEC03BA9221F242000C00B00 /* AppDelegate.swift */; };
 		DEC03BAC221F242000C00B00 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEC03BAB221F242000C00B00 /* ViewController.swift */; };
@@ -44,6 +45,18 @@
 		DEECEFEB2220171100A9026F /* NSAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEECEFEA2220171100A9026F /* NSAlert.swift */; };
 		DEF6739A22295E8A002C47AA /* WindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF6739922295E8A002C47AA /* WindowController.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		DEA457D0226D12FD00937067 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		DE0284862233109900C163F6 /* Set.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Set.swift; sourceTree = "<group>"; };
@@ -66,6 +79,8 @@
 		DE7DE991222BE3B8009A2345 /* NSTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSTextView.swift; sourceTree = "<group>"; };
 		DE993441222C5F0E006A9A0A /* ExportManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportManager.swift; sourceTree = "<group>"; };
 		DE9B31112231EEE900CEECBB /* PathControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathControl.swift; sourceTree = "<group>"; };
+		DEA457D2226D12FD00937067 /* svgtopng */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = svgtopng; sourceTree = BUILT_PRODUCTS_DIR; };
+		DEA457D4226D12FE00937067 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		DEB44DF3222AF2F600C3BD38 /* Bash.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bash.swift; sourceTree = "<group>"; };
 		DEC03BA6221F242000C00B00 /* Svg to Png.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Svg to Png.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DEC03BA9221F242000C00B00 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -90,6 +105,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		DEA457CF226D12FD00937067 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DEC03BA3221F242000C00B00 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -156,6 +178,14 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		DEA457D3226D12FE00937067 /* svgtopng */ = {
+			isa = PBXGroup;
+			children = (
+				DEA457D4226D12FE00937067 /* main.swift */,
+			);
+			path = svgtopng;
+			sourceTree = "<group>";
+		};
 		DEC03B9D221F242000C00B00 = {
 			isa = PBXGroup;
 			children = (
@@ -163,6 +193,7 @@
 				DE0D959A223D0FFC0089C72B /* LICENSE */,
 				DE0D959B223D0FFC0089C72B /* README.md */,
 				DEC03BA8221F242000C00B00 /* Svg to Png */,
+				DEA457D3226D12FE00937067 /* svgtopng */,
 				DEC03BA7221F242000C00B00 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -171,6 +202,7 @@
 			isa = PBXGroup;
 			children = (
 				DEC03BA6221F242000C00B00 /* Svg to Png.app */,
+				DEA457D2226D12FD00937067 /* svgtopng */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -214,6 +246,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		DEA457D1226D12FD00937067 /* svgtopng */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DEA457D8226D12FE00937067 /* Build configuration list for PBXNativeTarget "svgtopng" */;
+			buildPhases = (
+				DEA457CE226D12FD00937067 /* Sources */,
+				DEA457CF226D12FD00937067 /* Frameworks */,
+				DEA457D0226D12FD00937067 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = svgtopng;
+			productName = svgtopng;
+			productReference = DEA457D2226D12FD00937067 /* svgtopng */;
+			productType = "com.apple.product-type.tool";
+		};
 		DEC03BA5221F242000C00B00 /* Svg to Png */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = DEC03BB8221F242100C00B00 /* Build configuration list for PBXNativeTarget "Svg to Png" */;
@@ -237,10 +286,13 @@
 		DEC03B9E221F242000C00B00 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1010;
+				LastSwiftUpdateCheck = 1020;
 				LastUpgradeCheck = 1010;
 				ORGANIZATIONNAME = Todd;
 				TargetAttributes = {
+					DEA457D1226D12FD00937067 = {
+						CreatedOnToolsVersion = 10.2.1;
+					};
 					DEC03BA5221F242000C00B00 = {
 						CreatedOnToolsVersion = 10.1;
 						LastSwiftMigration = 1020;
@@ -261,6 +313,7 @@
 			projectRoot = "";
 			targets = (
 				DEC03BA5221F242000C00B00 /* Svg to Png */,
+				DEA457D1226D12FD00937067 /* svgtopng */,
 			);
 		};
 /* End PBXProject section */
@@ -283,6 +336,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		DEA457CE226D12FD00937067 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DEA457D5226D12FE00937067 /* main.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DEC03BA2221F242000C00B00 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -333,6 +394,28 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		DEA457D6226D12FE00937067 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = S229Q43BWG;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		DEA457D7226D12FE00937067 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = S229Q43BWG;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 		DEC03BB6221F242100C00B00 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -494,6 +577,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		DEA457D8226D12FE00937067 /* Build configuration list for PBXNativeTarget "svgtopng" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DEA457D6226D12FE00937067 /* Debug */,
+				DEA457D7226D12FE00937067 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		DEC03BA1221F242000C00B00 /* Build configuration list for PBXProject "Svg to Png" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
