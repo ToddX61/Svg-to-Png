@@ -7,7 +7,6 @@ protocol SvgProjectDelegate {
 
 class SvgProject: NSDocument {
     let DocumentTypeName = "SVG Project"
-    let ExportCommand = "rsvg-convert -w %x -h %x \"%@\" -o \"%@\""
 
     fileprivate var _atlases = AtlasArray()
 
