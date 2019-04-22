@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		DE0284872233109900C163F6 /* Set.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0284862233109900C163F6 /* Set.swift */; };
 		DE02848922331F4C00C163F6 /* ExportFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE02848822331F4C00C163F6 /* ExportFile.swift */; };
-		DE052615226E06BC004DC8B4 /* svgtopng.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE052614226E06BC004DC8B4 /* svgtopng.swift */; };
+		DE052615226E06BC004DC8B4 /* CLI.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE052614226E06BC004DC8B4 /* CLI.swift */; };
 		DE0D959C223D0FFD0089C72B /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = DE0D9599223D0FFC0089C72B /* .gitignore */; };
 		DE0D959D223D0FFD0089C72B /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = DE0D959A223D0FFC0089C72B /* LICENSE */; };
 		DE0D959E223D0FFD0089C72B /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = DE0D959B223D0FFC0089C72B /* README.md */; };
@@ -86,7 +86,7 @@
 /* Begin PBXFileReference section */
 		DE0284862233109900C163F6 /* Set.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Set.swift; sourceTree = "<group>"; };
 		DE02848822331F4C00C163F6 /* ExportFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportFile.swift; sourceTree = "<group>"; };
-		DE052614226E06BC004DC8B4 /* svgtopng.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = svgtopng.swift; sourceTree = "<group>"; };
+		DE052614226E06BC004DC8B4 /* CLI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLI.swift; sourceTree = "<group>"; };
 		DE0D9599223D0FFC0089C72B /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		DE0D959A223D0FFC0089C72B /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		DE0D959B223D0FFC0089C72B /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -212,7 +212,7 @@
 			children = (
 				DEA457D4226D12FE00937067 /* main.swift */,
 				DEA457D9226D13C200937067 /* Console.swift */,
-				DE052614226E06BC004DC8B4 /* svgtopng.swift */,
+				DE052614226E06BC004DC8B4 /* CLI.swift */,
 			);
 			path = svgtopng;
 			sourceTree = "<group>";
@@ -393,7 +393,7 @@
 				DEA457EB226D16C000937067 /* DoubleToken.swift in Sources */,
 				DEA457DC226D16A500937067 /* Project.swift in Sources */,
 				DEA457EC226D16E600937067 /* NSAlert.swift in Sources */,
-				DE052615226E06BC004DC8B4 /* svgtopng.swift in Sources */,
+				DE052615226E06BC004DC8B4 /* CLI.swift in Sources */,
 				DEA457F1226D16E600937067 /* URL.swift in Sources */,
 				DEA457ED226D16E600937067 /* NSOutlineView.swift in Sources */,
 				DEA457E2226D16AD00937067 /* ExportCommands.swift in Sources */,

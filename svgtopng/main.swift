@@ -1,5 +1,5 @@
 
 import Foundation
 
-Console.output(svgtopng.printUsage())
+Console.output(CLI.printUsage())
 
