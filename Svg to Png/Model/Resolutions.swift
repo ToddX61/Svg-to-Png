@@ -5,6 +5,16 @@ enum Resolution: String, Option {
     case x1, x2, x3
 
     fileprivate static let _suffix = ["", "@2x", "@3x"]
+    
+    init?(value: Int) {
+        for (idx, resolution) in Resolution.allCases.enumerated() {
+            if idx + 1 == value {
+                self = resolution
+                return
+            }
+        }
+        return nil
+    }
 
     var suffix: String {
         switch self
