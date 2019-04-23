@@ -17,6 +17,7 @@
 		DE3CB5722254077C006AFB4A /* ExportCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3CB5712254077C006AFB4A /* ExportCommands.swift */; };
 		DE3CB5752254E459006AFB4A /* ProcessCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3CB5742254E459006AFB4A /* ProcessCommand.swift */; };
 		DE4A78682268938F00FB876C /* SvgParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4A78672268938F00FB876C /* SvgParser.swift */; };
+		DE4DE13B226F589E00949E44 /* AppSuite.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4DE13A226F589E00949E44 /* AppSuite.swift */; };
 		DE5B648F223FDEE0003AFF06 /* PreferencesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE5B648D223FDEE0003AFF06 /* PreferencesController.swift */; };
 		DE5B6490223FDEE0003AFF06 /* PreferencesController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DE5B648E223FDEE0003AFF06 /* PreferencesController.xib */; };
 		DE70144922577D0900C727A5 /* ExportCommandManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE70144822577D0900C727A5 /* ExportCommandManager.swift */; };
@@ -94,6 +95,7 @@
 		DE3CB5712254077C006AFB4A /* ExportCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportCommands.swift; sourceTree = "<group>"; };
 		DE3CB5742254E459006AFB4A /* ProcessCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessCommand.swift; sourceTree = "<group>"; };
 		DE4A78672268938F00FB876C /* SvgParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SvgParser.swift; sourceTree = "<group>"; };
+		DE4DE13A226F589E00949E44 /* AppSuite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSuite.swift; sourceTree = "<group>"; };
 		DE5B648D223FDEE0003AFF06 /* PreferencesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesController.swift; sourceTree = "<group>"; };
 		DE5B648E223FDEE0003AFF06 /* PreferencesController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PreferencesController.xib; sourceTree = "<group>"; };
 		DE70144822577D0900C727A5 /* ExportCommandManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportCommandManager.swift; sourceTree = "<group>"; };
@@ -182,6 +184,7 @@
 		DE5090AB222B318000577122 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				DE4DE13A226F589E00949E44 /* AppSuite.swift */,
 				DE735C1122452135008B4059 /* AtlasArray.swift */,
 				DEC03BBB221F25CF00C00B00 /* Project.swift */,
 				DEC03BBC221F25CF00C00B00 /* Resolutions.swift */,
@@ -416,6 +419,7 @@
 				DE735C1222452135008B4059 /* AtlasArray.swift in Sources */,
 				DE0284872233109900C163F6 /* Set.swift in Sources */,
 				DEC03BAA221F242000C00B00 /* AppDelegate.swift in Sources */,
+				DE4DE13B226F589E00949E44 /* AppSuite.swift in Sources */,
 				DEF6739A22295E8A002C47AA /* WindowController.swift in Sources */,
 				DEC03BBE221F25CF00C00B00 /* Resolutions.swift in Sources */,
 				DEA457F3226D1B2B00937067 /* SvgToPngController.swift in Sources */,
