@@ -7,7 +7,7 @@ enum OutputType {
 }
 
 class Console {
-    class func output(_ sequence: Any..., to: OutputType = .standard) {
+    class func write(_ sequence: Any..., to: OutputType = .standard) {
         var msg = ""
         _ = sequence.map { msg.append("\($0)") }
 

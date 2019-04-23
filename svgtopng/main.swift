@@ -1,5 +1,5 @@
 
 import Foundation
 
-Console.output(CLI.printUsage())
+CLI().run()
 
