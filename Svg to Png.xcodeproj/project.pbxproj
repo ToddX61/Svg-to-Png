@@ -18,6 +18,7 @@
 		DE3CB5752254E459006AFB4A /* ProcessCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3CB5742254E459006AFB4A /* ProcessCommand.swift */; };
 		DE4A78682268938F00FB876C /* SvgParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4A78672268938F00FB876C /* SvgParser.swift */; };
 		DE4DE13B226F589E00949E44 /* AppSuite.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4DE13A226F589E00949E44 /* AppSuite.swift */; };
+		DE4DE13C226F5C6000949E44 /* AppSuite.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4DE13A226F589E00949E44 /* AppSuite.swift */; };
 		DE5B648F223FDEE0003AFF06 /* PreferencesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE5B648D223FDEE0003AFF06 /* PreferencesController.swift */; };
 		DE5B6490223FDEE0003AFF06 /* PreferencesController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DE5B648E223FDEE0003AFF06 /* PreferencesController.xib */; };
 		DE70144922577D0900C727A5 /* ExportCommandManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE70144822577D0900C727A5 /* ExportCommandManager.swift */; };
@@ -400,6 +401,7 @@
 				DEA457F1226D16E600937067 /* URL.swift in Sources */,
 				DEA457ED226D16E600937067 /* NSOutlineView.swift in Sources */,
 				DEA457E2226D16AD00937067 /* ExportCommands.swift in Sources */,
+				DE4DE13C226F5C6000949E44 /* AppSuite.swift in Sources */,
 				DEA457E0226D16AD00937067 /* ExportCommandMacro.swift in Sources */,
 				DEA457E7226D16B500937067 /* Bash.swift in Sources */,
 				DEA457DE226D16A500937067 /* SuppressionKey.swift in Sources */,

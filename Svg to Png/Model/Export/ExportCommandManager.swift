@@ -17,7 +17,7 @@ class ExportCommandManager {
     }
 
     private init() {
-        if let commands = UserDefaults.standard.object(forKey:ExportCommandManager.ExportCommandKey) as? Data, let jsonData = JSONExportCommands(data: commands) {
+        if let commands = AppSuite.userDefaults().object(forKey:ExportCommandManager.ExportCommandKey) as? Data, let jsonData = JSONExportCommands(data: commands) {
                 exportCommands = ExportCommands(jsonData.obj.commands)
         } else {
             exportCommands = ExportCommands.predefined
@@ -30,6 +30,8 @@ class ExportCommandManager {
     }
     
     public func save() {
-        UserDefaults.standard.set(JSONExportCommands(object: exportCommands).jsonData, forKey: ExportCommandManager.ExportCommandKey)
+        let defaults = AppSuite.userDefaults()
+        defaults.set(JSONExportCommands(object: exportCommands).jsonData, forKey: ExportCommandManager.ExportCommandKey)
+        defaults.synchronize()
     }
 }
