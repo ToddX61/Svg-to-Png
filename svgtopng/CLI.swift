@@ -8,7 +8,7 @@ enum OptionType: String, Option {
     case files = "f"
     case overrideWidthHeight = "o"
     case resolutions = "r"
-    case exportCommand = "xc"
+    case exportCommand = "c"
     case unknown
 
     init(value: String) {
@@ -22,7 +22,7 @@ enum OptionType: String, Option {
         self = .unknown
     }
 
-    var asOption: String { return "-\(rawValue)" }
+    var flag: String { return "-\(rawValue)" }
 
     var optionHelp: String {
         switch self {
@@ -33,13 +33,13 @@ enum OptionType: String, Option {
         case .export:
             return "export svg files in the specified projects"
         case .files:
-            return "only export svg specified files or folders, for instance: \(asOption) svgfile1.svg svgfolder ...\n\t\tThe default is all svg files are processed"
+            return "only export svg specified files or folders, for instance: \(flag) svgfile1.svg svgfolder ...\n\t\tThe default: all svg files are processed"
         case .overrideWidthHeight:
-            return "override the svg files' width and height: \(asOption) 26:32"
+            return "override the svg files' width and height: \(flag) 26:32"
         case .resolutions:
-            return "resolutions to export: \(asOption) '1,2,3' ' 2,3, '1' etc... \n\t\tThe default is to use the svg file's resolutions selected in the svg project"
+            return "resolutions to export: \(flag) '1,2,3' '2,3', '1' etc... \n\t\tThe default is to use the svg file's resolutions selected in the svg project"
         case .exportCommand:
-            return "the index of the export command to use when exporting: \(asOption)3\n\t\tdefaults to 0"
+            return "the index of the export command to use when exporting: \(flag)3\n\t\tdefaults to the default defined in 'Svg to Png'"
         default:
             return "\(OptionType.unknown)"
         }
@@ -53,6 +53,7 @@ struct CLIArguments {
     var width = 0
     var height = 0
     var exportCommandIdx = -1
+    var exportCommand: ExportCommand?
     var resolutions = Resolutions()
     var projects = [String]()
     var files = [String]()
@@ -64,23 +65,29 @@ class CLI {
     static let Version = "1.1.1"
     static let Copyright = "Copyright © 2019 Todd Denlinger. All rights reserved."
 
-    //    MARK: - private variables
+    //    MARK: - private properties
 
     fileprivate var _args = CLIArguments()
     fileprivate var _currentOption: OptionType = .unknown
+    
+    //    MARK: - public methods
+    
+    var arguments: CLIArguments { return _args }
 
     //    MARK: - class methods
 
-    class func printUsage() {
-        let executableName = (CommandLine.arguments[0] as NSString).lastPathComponent
-        Console.write(executableName, "v\(Version)")
+    class func printUsage(printHelp: Bool = true) {
+        let executableName = CommandLine.arguments[0).lastPathComponent
+        Console.write(executableName, " v\(Version)")
         Console.write(Copyright, "\n")
+
+        guard printHelp else { return }
         Console.write("usage: svgtopng [<svgproject> <svgproject> ...] [options]\n")
         Console.write("<svgproject> <svgproject> ... one or more svg project files\n")
         Console.write("options:")
         for option in OptionType.allCases {
             guard option != .unknown else { continue }
-            Console.write("   \(option.asOption):\t\(option.optionHelp)")
+            Console.write("   \(option.flag):\t\(option.optionHelp)")
         }
     }
 
@@ -88,6 +95,7 @@ class CLI {
 
     func run() {
         guard processArguments() else { return }
+        guard validateArguments() else { return }
     }
 
     //    MARK: - private methods
@@ -110,7 +118,7 @@ class CLI {
         var offset = 0
 
         for option in OptionType.allCases {
-            if argument.hasPrefix("\(option.asOption)") {
+            if argument.hasPrefix("\(option.flag)") {
                 _currentOption = option
                 offset = 2
                 break
@@ -124,10 +132,10 @@ class CLI {
 
         return parseArgument(String(argument.dropFirst(offset)))
     }
-    
+
     fileprivate func logArgumentError(_ argument: String, option: OptionType? = nil) {
         let optionType = option ?? _currentOption
-        Console.write("\(optionType.asOption): invalid argument '\(argument)'")
+        Console.write("\(optionType.flag): invalid argument '\(argument)'")
     }
 
     fileprivate func parseArgument(_ argument: String) -> Bool {
@@ -145,7 +153,7 @@ class CLI {
             return true
         case .resolutions:
             let splits = argument.split(separator: ",", maxSplits: Int.max, omittingEmptySubsequences: true)
-            guard splits.count != 0 else { return true }
+            guard !splits.isEmpty else { return true }
 
             for s in splits {
                 if let value = Int(s.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)), let resolution = Resolution(value: value) {
@@ -155,7 +163,7 @@ class CLI {
                 logArgumentError(argument)
                 return false
             }
-            
+
             _args.options.insert(_currentOption)
             return true
         case .overrideWidthHeight:
@@ -189,16 +197,72 @@ class CLI {
                 return false
             }
         case .exportCommand:
-            guard argument.isEmpty == false else { return true }
-            
+            guard argument.isEmpty != false else { return true }
+
             if let index = Int(argument) {
                 _args.exportCommandIdx = index
                 _args.options.insert(_currentOption)
                 return true
             }
-        
+
             logArgumentError(argument)
             return false
         }
+    }
+
+    fileprivate func validateArguments() -> Bool {
+        if _args.options.count == 1 {
+            if _args.options.contains(.version) {
+                CLI.printUsage(printHelp: false)
+                return false
+            }
+
+            if _args.options.contains(.help) {
+                CLI.printUsage(printHelp: true)
+                return false
+            }
+
+            CLI.printUsage(printHelp: false)
+            Console.write("Nothing to do!")
+            return false
+        }
+
+        // assume we're exporting for now ... this may change later
+        _args.options.insert(.export)
+
+        guard validateExportCommand() else { return false }
+        return true
+    }
+
+    fileprivate func validateExportCommand() -> Bool {
+        if _args.projects.isEmpty {
+            CLI.printUsage(printHelp: false)
+            Console.write("No project file specified")
+            return false
+        }
+
+        var commands = ExportCommandManager.shared.exportCommands
+        commands.validate(repair: true)
+        var idx = _args.exportCommandIdx
+
+        if _args.exportCommandIdx == -1 {
+            if let defaultCmd = commands.defaultCommand {
+                _args.exportCommand = defaultCmd
+            } else {
+                idx = 0
+            }
+        }
+
+        if idx >= 0, idx < commands.commands.count {
+            _args.exportCommand = commands.commands[idx]
+        }
+
+        if _args.exportCommand == nil {
+            Console.write("Invalid \(OptionType.exportCommand.flag). No command found.")
+            return false
+        }
+        
+        
+        return true
     }
 }
