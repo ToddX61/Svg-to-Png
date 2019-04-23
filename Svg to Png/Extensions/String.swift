@@ -29,6 +29,14 @@ extension String {
         let result = NSString(string: self)
         return result.abbreviatingWithTildeInPath
     }
+    
+    var expandingTildeInPath: String {
+        if #available(OSX 10.12, *) {
+            return self.replacingOccurrences(of: "~", with: FileManager.default.homeDirectoryForCurrentUser.path)
+        } else {
+            return self.replacingOccurrences(of: "~", with: NSHomeDirectory())
+        }
+    }
 
 //    returns a string that is trim, and where multiple sequential occurences of whitespace or replaced with a single whitespace character
 
