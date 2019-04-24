@@ -56,7 +56,7 @@ struct CLIArguments {
     var exportCommand: ExportCommand?
     var resolutions = Resolutions()
     var projects = [String]()
-    var files = [String]()
+    var filenames = [String]()
 }
 
 class CLI {
@@ -69,20 +69,20 @@ class CLI {
 
     fileprivate var _args = CLIArguments()
     fileprivate var _currentOption: OptionType = .unknown
-    
+
     //    MARK: - public methods
-    
+
     var arguments: CLIArguments { return _args }
 
     //    MARK: - class methods
 
     class func printUsage(printHelp: Bool = true) {
-        let executableName = CommandLine.arguments[0).lastPathComponent
+        let executableName = (CommandLine.arguments[0] as NSString).lastPathComponent
         Console.write(executableName, " v\(Version)")
         Console.write(Copyright, "\n")
 
         guard printHelp else { return }
-        Console.write("usage: svgtopng [<svgproject> <svgproject> ...] [options]\n")
+        Console.write("usage: \(executableName) [<svgproject> <svgproject> ...] [options]\n")
         Console.write("<svgproject> <svgproject> ... one or more svg project files\n")
         Console.write("options:")
         for option in OptionType.allCases {
@@ -96,6 +96,7 @@ class CLI {
     func run() {
         guard processArguments() else { return }
         guard validateArguments() else { return }
+        guard export() else { return }
     }
 
     //    MARK: - private methods
@@ -148,7 +149,7 @@ class CLI {
         case .files:
             _args.options.insert(_currentOption)
             if !argument.isEmpty {
-                _args.projects.append(argument)
+                _args.filenames.append(argument)
             }
             return true
         case .resolutions:
@@ -261,8 +262,32 @@ class CLI {
             Console.write("Invalid \(OptionType.exportCommand.flag). No command found.")
             return false
         }
-        
-        
+
+        return true
+    }
+}
+
+//  MARK: - exporting
+
+extension CLI {
+    //    MARK: - private methods
+
+    fileprivate func export() -> Bool {
+        guard _args.options.contains(.export) else { return true }
+        let manager = FileManager()
+
+        for filename in _args.projects {
+            let expanded = filename.expandingTildeInPath
+            if !manager.fileExists(atPath: expanded) {
+                Console.write("Project \(expanded) not found")
+                return false
+            }
+
+            guard let project = Project(filename: expanded) else {
+                Console.write("Unable to open '\(filename.abbreviatingWithTildeInPath)'")
+                return false
+            }
+        }
         return true
     }
 }
