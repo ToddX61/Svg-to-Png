@@ -18,9 +18,9 @@ struct JSONRepresentable<T>: Codable where T: Codable {
         self.init(data: data)
     }
 
-    init?(fromURL url: String) {
-        guard let url = URL(string: url) else { return nil }
-        guard let data = try? Data(contentsOf: url) else { return nil }
+    init?(filename: String) {
+        let url = URL(fileURLWithPath: filename)
+        guard let data = try? Data(contentsOf: url, options: NSData.ReadingOptions()) else { return nil }
         self.init(data: data)
     }
 
