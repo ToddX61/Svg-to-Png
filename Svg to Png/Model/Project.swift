@@ -1,7 +1,7 @@
 
 import Foundation
 
-struct _Project: Codable {
+struct ProjectCore: Codable {
     var atlases: [Atlas]
 
     init() {
@@ -18,7 +18,7 @@ struct _Project: Codable {
     }
 }
 
-typealias Project = JSONRepresentable<_Project>
+typealias Project = JSONRepresentable<ProjectCore>
 
 struct Atlas: Codable {
     var folder: String
