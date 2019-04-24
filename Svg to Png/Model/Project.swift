@@ -29,6 +29,26 @@ struct Atlas: Codable {
     var svgFiles: [SVGFile]
 }
 
+extension Atlas {
+    init() {
+        folder = ""
+        svgFiles = [SVGFile]()
+    }
+    
+    init(filepath: String) {
+        self.init()
+        folder = filepath
+    }
+    
+    func indexOf(svgFilename: String) -> Int {
+        if let idx = svgFiles.firstIndex(where: { $0.filename == svgFilename } ) {
+            return idx
+        }
+        
+        return -1
+    }
+}
+
 struct SVGFile: Codable {
     static let FileExtension = "svg"
     static let OuputExtension = "png"
@@ -46,26 +66,6 @@ struct SVGFile: Codable {
     }
 }
 
-extension Atlas {
-    init() {
-        folder = ""
-        svgFiles = [SVGFile]()
-    }
-
-    init(filepath: String) {
-        self.init()
-        folder = filepath
-    }
-
-    func indexOf(svgFilename: String) -> Int {
-        if let idx = svgFiles.firstIndex(where: { $0.filename == svgFilename } ) {
-            return idx
-        }
-
-        return -1
-    }
-}
-
 extension SVGFile {
     init() {
         filename = ""
@@ -77,22 +77,6 @@ extension SVGFile {
     init(filename: String) {
         self.init()
         self.filename = filename
-    }
-
-    init?(data: Data) {
-        guard let me = try? JSONDecoder().decode(SVGFile.self, from: data) else { return nil }
-        self = me
-    }
-
-    init?(_ json: String, using encoding: String.Encoding = .utf8) {
-        guard let data = json.data(using: encoding) else { return nil }
-        self.init(data: data)
-    }
-
-    init?(fromURL url: String) {
-        guard let url = URL(string: url) else { return nil }
-        guard let data = try? Data(contentsOf: url) else { return nil }
-        self.init(data: data)
     }
 
     var jsonData: Data? {
