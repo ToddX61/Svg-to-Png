@@ -27,7 +27,6 @@ class ExportManager {
 
             DispatchQueue.global(qos: .background).async {
                 let cmd = ExportManager.buildExportCommand(exportFile: exportFile)
-//                debugLog(cmd)
 
                 SwiftTryCatch.try(
                     {
