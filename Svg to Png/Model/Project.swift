@@ -8,13 +8,13 @@ struct ProjectCore: Codable {
         atlases = [Atlas]()
     }
 
-    func indexOf(folder: String) -> Int {
+    func indexOf(folder: String) -> Int? {
         let findUrl = URL(fileURLWithPath: folder, isDirectory: true)
         if let idx = atlases.firstIndex(where: { URL(fileURLWithPath: $0.folder, isDirectory: true).path == findUrl.path }) {
             return idx
         }
 
-        return -1
+        return nil
     }
 }
 

@@ -1,53 +1,6 @@
 
 import Foundation
 
-enum OptionType: String, Option {
-    case version = "v"
-    case help = "h"
-    case export = "x"
-    case files = "f"
-    case overrideWidthHeight = "o"
-    case resolutions = "r"
-    case exportCommand = "c"
-    case unknown
-
-    init(value: String) {
-        let _value = value.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
-        for option in OptionType.allCases {
-            if _value == option.rawValue {
-                self = option
-                return
-            }
-        }
-        self = .unknown
-    }
-
-    var flag: String { return "-\(rawValue)" }
-
-    var optionHelp: String {
-        switch self {
-        case .version:
-            return "version number"
-        case .help:
-            return "this help page"
-        case .export:
-            return "export svg files in the specified projects"
-        case .files:
-            return "only export svg specified files or folders, for instance: \(flag) svgfile1.svg svgfolder ...\n\t\tThe default: all svg files are processed"
-        case .overrideWidthHeight:
-            return "override the svg files' width and height: \(flag) 26:32"
-        case .resolutions:
-            return "resolutions to export: \(flag) '1,2,3' '2,3', '1' etc... \n\t\tThe default is to use the svg file's resolutions selected in the svg project"
-        case .exportCommand:
-            return "the index of the export command to use when exporting: \(flag)3\n\t\tdefaults to the default defined in 'Svg to Png'"
-        default:
-            return "\(OptionType.unknown)"
-        }
-    }
-}
-
-typealias OptionTypes = Set<OptionType>
-
 struct CLIArguments {
     var options = OptionTypes(minimumCapacity: OptionType.allCases.count)
     var width = 0
@@ -94,6 +47,7 @@ class CLI {
     //    MARK: - public methods
 
     func run() {
+        //        following func's return a Bool: should continuing processing?
         guard processArguments() else { return }
         guard validateArguments() else { return }
         guard export() else { return }
@@ -223,9 +177,9 @@ class CLI {
                 return false
             }
 
-            CLI.printUsage(printHelp: false)
-            Console.write("Nothing to do!")
-            return false
+//            CLI.printUsage(printHelp: false)
+//            Console.write("Nothing to do!")
+//            return false
         }
 
         // assume we're exporting for now ... this may change later
@@ -286,6 +240,34 @@ extension CLI {
             guard let project = Project(filename: expanded) else {
                 Console.write("Unable to open '\(filename.abbreviatingWithTildeInPath)'")
                 return false
+            }
+
+            guard export(project.obj) else { return false }
+        }
+        return true
+    }
+
+    fileprivate func export(_ project: ProjectCore) -> Bool {
+        if _args.options.contains(.files), _args.filenames.count > 0 {
+//                "~/Documents/Sounds"
+//                "/Users/todddenlinger/Documents/Sounds"
+//                "Sounds"
+//                "someimage.png"
+//                "Sounds/someimage.png"
+
+            let documentURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
+            
+            for filename in _args.filenames {
+                
+                let prjIdx: Int?
+                let expanded = filename.expandingTildeInPath
+                
+                if let idx = project.indexOf(folder: expanded) {
+                    prjIdx = idx
+                } else if let idx = project.indexOf(folder: URL(fileURLWithPath: expanded, relativeTo: documentURL).path) {
+                        prjIdx = idx
+                }
+                
             }
         }
         return true

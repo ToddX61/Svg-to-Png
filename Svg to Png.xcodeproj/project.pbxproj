@@ -28,6 +28,7 @@
 		DE7398532235C4FF00D87AC3 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7398522235C4FF00D87AC3 /* String.swift */; };
 		DE7DE990222BE2AB009A2345 /* NSOutlineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7DE98F222BE2AB009A2345 /* NSOutlineView.swift */; };
 		DE7DE992222BE3B8009A2345 /* NSTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7DE991222BE3B8009A2345 /* NSTextView.swift */; };
+		DE903FD72270730100343112 /* OptionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE903FD62270730100343112 /* OptionType.swift */; };
 		DE993442222C5F0E006A9A0A /* ExportManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE993441222C5F0E006A9A0A /* ExportManager.swift */; };
 		DE9B31122231EEE900CEECBB /* PathControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9B31112231EEE900CEECBB /* PathControl.swift */; };
 		DEA457D5226D12FE00937067 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEA457D4226D12FE00937067 /* main.swift */; };
@@ -106,6 +107,7 @@
 		DE7398522235C4FF00D87AC3 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		DE7DE98F222BE2AB009A2345 /* NSOutlineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSOutlineView.swift; sourceTree = "<group>"; };
 		DE7DE991222BE3B8009A2345 /* NSTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSTextView.swift; sourceTree = "<group>"; };
+		DE903FD62270730100343112 /* OptionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionType.swift; sourceTree = "<group>"; };
 		DE993441222C5F0E006A9A0A /* ExportManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportManager.swift; sourceTree = "<group>"; };
 		DE9B31112231EEE900CEECBB /* PathControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathControl.swift; sourceTree = "<group>"; };
 		DEA457D2226D12FD00937067 /* svgtopng */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = svgtopng; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -217,6 +219,7 @@
 				DEA457D4226D12FE00937067 /* main.swift */,
 				DEA457D9226D13C200937067 /* Console.swift */,
 				DE052614226E06BC004DC8B4 /* CLI.swift */,
+				DE903FD62270730100343112 /* OptionType.swift */,
 			);
 			path = svgtopng;
 			sourceTree = "<group>";
@@ -383,6 +386,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DE903FD72270730100343112 /* OptionType.swift in Sources */,
 				DEA457D5226D12FE00937067 /* main.swift in Sources */,
 				DEA457E1226D16AD00937067 /* ExportCommandManager.swift in Sources */,
 				DEA457E8226D16B500937067 /* DebugLog.swift in Sources */,

@@ -45,7 +45,7 @@ class SvgProject: NSDocument {
     override func data(ofType _: String) throws -> Data {
         delegate?.beforeSave()
 
-        var project = Project(object: _Project())
+        var project = Project(object: ProjectCore())
         project.obj.atlases = _atlases.atlases
 
         if let data = project.jsonData {

@@ -63,7 +63,11 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "Sample.svgproj"
+            argument = "~/Documents/Sample.svgproj"
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "-fSounds"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>
