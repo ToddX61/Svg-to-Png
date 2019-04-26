@@ -2,6 +2,8 @@
 import Foundation
 
 struct ProjectCore: Codable {
+    static let FileType = "svgproj"
+    
     var atlases: [Atlas]
 
     init() {
