@@ -6,13 +6,13 @@ class ExportManager {
 
     class func export(atlases: [Atlas], async: Bool = true, completionHander: @escaping (_ ouput: String) -> Void) {
         for atlas in atlases {
-            export(atlas: atlas, completionHander: completionHander)
+            export(atlas: atlas, async: async, completionHander: completionHander)
         }
     }
     
     class func export(atlas: Atlas, async: Bool = true, completionHander: @escaping (_ ouput: String) -> Void) {
         for svgFile in atlas.svgFiles {
-            export(atlas: atlas, svgFile: svgFile, completionHander: completionHander)
+            export(atlas: atlas, svgFile: svgFile, async: async, completionHander: completionHander)
         }
     }
 
