@@ -7,10 +7,19 @@ struct ProjectCore: Codable {
     init() {
         atlases = [Atlas]()
     }
+    
+    func firstIndexOf(svgFile: String) -> (prjIdx: Int?, svgIdx: Int?)? {
+        for (prjIdx, atlas) in atlases.enumerated() {
+            if let svgIdx = indexOf(folder: atlas.folder) {
+                return (prjIdx, svgIdx)
+            }
+        }
+        return nil
+    }
 
     func indexOf(folder: String) -> Int? {
         let findUrl = URL(fileURLWithPath: folder, isDirectory: true)
-        if let idx = atlases.firstIndex(where: { URL(fileURLWithPath: $0.folder, isDirectory: true).path == findUrl.path }) {
+        if let idx = atlases.firstIndex(where: { URL(fileURLWithPath: $0.folder, isDirectory: true).path == findUrl.path } ) {
             return idx
         }
 
