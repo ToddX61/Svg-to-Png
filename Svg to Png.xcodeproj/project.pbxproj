@@ -55,7 +55,6 @@
 		DEA457EF226D16E600937067 /* Set.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0284862233109900C163F6 /* Set.swift */; };
 		DEA457F0226D16E600937067 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7398522235C4FF00D87AC3 /* String.swift */; };
 		DEA457F1226D16E600937067 /* URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = DECE6BE32236A089009590EF /* URL.swift */; };
-		DEA457F3226D1B2B00937067 /* SvgToPngController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEA457F2226D1B2B00937067 /* SvgToPngController.swift */; };
 		DEB44DF4222AF2F600C3BD38 /* Bash.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEB44DF3222AF2F600C3BD38 /* Bash.swift */; };
 		DEC03BAA221F242000C00B00 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEC03BA9221F242000C00B00 /* AppDelegate.swift */; };
 		DEC03BAC221F242000C00B00 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEC03BAB221F242000C00B00 /* ViewController.swift */; };
@@ -113,7 +112,6 @@
 		DEA457D2226D12FD00937067 /* svgtopng */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = svgtopng; sourceTree = BUILT_PRODUCTS_DIR; };
 		DEA457D4226D12FE00937067 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		DEA457D9226D13C200937067 /* Console.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Console.swift; sourceTree = "<group>"; };
-		DEA457F2226D1B2B00937067 /* SvgToPngController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SvgToPngController.swift; sourceTree = "<group>"; };
 		DEB44DF3222AF2F600C3BD38 /* Bash.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bash.swift; sourceTree = "<group>"; };
 		DEC03BA6221F242000C00B00 /* Svg to Png.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Svg to Png.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DEC03BA9221F242000C00B00 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -194,7 +192,6 @@
 				DE7293262240259D006E1A4C /* SuppressionKey.swift */,
 				DECCCC81226A164900B1393D /* Export */,
 				DE207F93223406F40065E7D9 /* Library */,
-				DEA457F5226D1BE800937067 /* ModelController */,
 				DECCCC82226A16F700B1393D /* SvgParse */,
 			);
 			path = Model;
@@ -222,14 +219,6 @@
 				DE903FD62270730100343112 /* OptionType.swift */,
 			);
 			path = svgtopng;
-			sourceTree = "<group>";
-		};
-		DEA457F5226D1BE800937067 /* ModelController */ = {
-			isa = PBXGroup;
-			children = (
-				DEA457F2226D1B2B00937067 /* SvgToPngController.swift */,
-			);
-			path = ModelController;
 			sourceTree = "<group>";
 		};
 		DEC03B9D221F242000C00B00 = {
@@ -428,7 +417,6 @@
 				DE4DE13B226F589E00949E44 /* AppSuite.swift in Sources */,
 				DEF6739A22295E8A002C47AA /* WindowController.swift in Sources */,
 				DEC03BBE221F25CF00C00B00 /* Resolutions.swift in Sources */,
-				DEA457F3226D1B2B00937067 /* SvgToPngController.swift in Sources */,
 				DEC03BAE221F242000C00B00 /* SvgProject.swift in Sources */,
 				DECCCC84226A178800B1393D /* DoubleToken.swift in Sources */,
 				DEC7513022522CF30003F116 /* CommandController.swift in Sources */,

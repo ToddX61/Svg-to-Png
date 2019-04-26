@@ -103,7 +103,7 @@ class CLI {
         case .files:
             _args.options.insert(_currentOption)
             if !argument.isEmpty {
-                _args.filenames.append(argument)
+                _args.filenames.append(argument.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines))
             }
             return true
         case .resolutions:
@@ -248,28 +248,69 @@ extension CLI {
     }
 
     fileprivate func export(_ project: ProjectCore) -> Bool {
-        if _args.options.contains(.files), _args.filenames.count > 0 {
+        guard _args.options.contains(.files), !_args.filenames.isEmpty else { return false }
 //                "~/Documents/Sounds"
 //                "/Users/todddenlinger/Documents/Sounds"
 //                "Sounds"
 //                "someimage.png"
 //                "Sounds/someimage.png"
 
-            let documentURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
+        let documentURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
+        var exportCount = 0
+        
+        for filename in _args.filenames {
+            let expanded: URL
             
-            for filename in _args.filenames {
-                
-                let prjIdx: Int?
-                let expanded = filename.expandingTildeInPath
-                
-                if let idx = project.indexOf(folder: expanded) {
+            do {
+                guard let work = filename.expandingTildeInPath.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed), let url = URL(string: work) else {
+                    Console.write("WARNING: could not export argument '\(filename)'")
+                    continue
+                }
+                expanded = url
+            }
+
+            let prjIdx: Int?
+            var svgIdx: Int?
+
+            do {
+                let relativeURL = URL(fileURLWithPath: expanded.path, relativeTo: documentURL)
+
+                if let idx = project.indexOf(folder: expanded.path) {
                     prjIdx = idx
-                } else if let idx = project.indexOf(folder: URL(fileURLWithPath: expanded, relativeTo: documentURL).path) {
-                        prjIdx = idx
+                } else if let idx = project.indexOf(folder: relativeURL.path) {
+                    prjIdx = idx
+                } else if let result = project.firstIndexOf(svgFile: expanded.path) {
+                    prjIdx = result.prjIdx
+                    svgIdx = result.svgIdx
+                } else if let result = project.firstIndexOf(svgFile: relativeURL.path) {
+                    prjIdx = result.prjIdx
+                    svgIdx = result.svgIdx
+                } else {
+                    prjIdx = nil
+                }
+            }
+            
+            guard let pIdx = prjIdx else { continue }
+            let atlas = project.atlases[pIdx]
+            exportCount += 1
+
+            if let sIdx = svgIdx {
+                ExportManager.export(atlas: atlas, svgFile: atlas.svgFiles[sIdx], async: false) { message in
+                    Console.write(message)
                 }
                 
+            } else {
+                ExportManager.export(atlas: project.atlases[pIdx], async: false) { message in
+                    Console.write(message)
+                }
             }
         }
+        
+        if exportCount == 0 {
+            Console.write("Nothing to export")
+            return false
+        }
+        
         return true
     }
 }
