@@ -13,7 +13,7 @@
 ## Install svg converters
 *Svg to Png* comes pre-configured with support for:
 
-* rsvg-convert (**[librsrg](https://github.com/GNOME/librsvg)**). Install librsvg on your mac with [Homebrew](https://brew.sh): `brew install librsvg`
+* rsvg-convert (**[librsvg](https://github.com/GNOME/librsvg)**). Install librsvg on your mac with [Homebrew](https://brew.sh): `brew install librsvg`
 
 * **[svgexport](https://github.com/shakiba/svgexport)**. *svgexport* requires that **npm** and **node.js** are installed on your mac. If need be: `brew install node` then `npm install svgexport -g`
 
