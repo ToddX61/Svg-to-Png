@@ -6,7 +6,7 @@ enum OptionType: String, Option {
     case help = "h"
     case export = "x"
     case files = "f"
-    case overrideWidthHeight = "o"
+    case size = "s"
     case resolutions = "r"
     case exportCommand = "c"
     case unknown
@@ -34,7 +34,7 @@ enum OptionType: String, Option {
             return "export svg files in the specified projects"
         case .files:
             return "only export svg specified files or folders, for instance: \(flag) svgfile1.svg svgfolder ...\n\t\tThe default: all svg files are processed"
-        case .overrideWidthHeight:
+        case .size:
             return "override the svg files' width and height: \(flag) 26:32"
         case .resolutions:
             return "resolutions to export: \(flag) '1,2,3' '2,3', '1' etc... \n\t\tThe default is to use the svg file's resolutions selected in the svg project"

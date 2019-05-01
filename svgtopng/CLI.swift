@@ -6,7 +6,7 @@ struct CLIArguments {
     var width = 0
     var height = 0
     var exportCommandIdx = -1
-    var exportCommand: ExportCommand?
+    var exportCommand: String = ""
     var resolutions = Resolutions()
     var projects = [String]()
     var filenames = [String]()
@@ -42,12 +42,19 @@ class CLI {
             guard option != .unknown else { continue }
             Console.write("   \(option.flag):\t\(option.optionHelp)")
         }
+
+        let commands = ExportCommandManager.shared.exportCommands.transformed
+
+        Console.write("\navailable export commands:")
+        for (idx, command) in commands.enumerated() {
+            Console.write("\t\(idx)\t\(command.command)")
+        }
     }
 
     //    MARK: - public methods
 
     func run() {
-        //        following func's return a Bool: should continuing processing?
+        //        following func's return a Bool: whether should continuing processing?
         guard processArguments() else { return }
         guard validateArguments() else { return }
         guard export() else { return }
@@ -97,7 +104,14 @@ class CLI {
         switch _currentOption {
         case .unknown:
             if !argument.isEmpty {
-                _args.projects.append(argument)
+                var arg = argument
+                let ext = ".\(ProjectCore.FileType)"
+
+                if !argument.hasSuffix(ext) {
+                    arg.append(ext)
+                }
+
+                _args.projects.append(arg)
             }
             return true
         case .files:
@@ -121,7 +135,7 @@ class CLI {
 
             _args.options.insert(_currentOption)
             return true
-        case .overrideWidthHeight:
+        case .size:
             let splits = argument.split(separator: ":", maxSplits: Int.max, omittingEmptySubsequences: true)
             let count = splits.count
             if count == 0 {
@@ -152,7 +166,7 @@ class CLI {
                 return false
             }
         case .exportCommand:
-            guard argument.isEmpty != false else { return true }
+            guard !argument.isEmpty else { return true }
 
             if let index = Int(argument) {
                 _args.exportCommandIdx = index
@@ -176,10 +190,6 @@ class CLI {
                 CLI.printUsage(printHelp: true)
                 return false
             }
-
-//            CLI.printUsage(printHelp: false)
-//            Console.write("Nothing to do!")
-//            return false
         }
 
         // assume we're exporting for now ... this may change later
@@ -191,7 +201,7 @@ class CLI {
 
     fileprivate func validateExportCommand() -> Bool {
         if _args.projects.isEmpty {
-            CLI.printUsage(printHelp: false)
+            CLI.printUsage(printHelp: true)
             Console.write("No project file specified")
             return false
         }
@@ -200,19 +210,19 @@ class CLI {
         commands.validate(repair: true)
         var idx = _args.exportCommandIdx
 
-        if _args.exportCommandIdx == -1 {
+        if idx == -1 {
             if let defaultCmd = commands.defaultCommand {
-                _args.exportCommand = defaultCmd
+                _args.exportCommand = defaultCmd.obj.command
             } else {
                 idx = 0
             }
         }
 
         if idx >= 0, idx < commands.commands.count {
-            _args.exportCommand = commands.commands[idx]
+            _args.exportCommand = commands.commands[idx].obj.command
         }
 
-        if _args.exportCommand == nil {
+        if _args.exportCommand.isEmpty {
             Console.write("Invalid \(OptionType.exportCommand.flag). No command found.")
             return false
         }
@@ -224,43 +234,56 @@ class CLI {
 //  MARK: - exporting
 
 extension CLI {
-    //    MARK: - private methods
+    //    MARK: - exporting
 
     fileprivate func export() -> Bool {
         guard _args.options.contains(.export) else { return true }
-        let manager = FileManager()
+        let fileManager = FileManager()
+        let exportArguments = ExportManager.Arguments(async: false, command: _args.exportCommand)
+        let exportManager = ExportManager(exportArguments)
 
-        for filename in _args.projects {
-            let expanded = filename.expandingTildeInPath
-            if !manager.fileExists(atPath: expanded) {
+        for atlas in _args.projects {
+            let expanded = atlas.expandingTildeInPath
+
+            if !fileManager.fileExists(atPath: expanded) {
                 Console.write("Project \(expanded) not found")
                 return false
             }
 
             guard let project = Project(filename: expanded) else {
-                Console.write("Unable to open '\(filename.abbreviatingWithTildeInPath)'")
+                Console.write("Unable to open '\(atlas.abbreviatingWithTildeInPath)'")
                 return false
             }
 
-            guard export(project.obj) else { return false }
+            let projectCore = project.obj
+
+            if !_args.options.contains(.files) || _args.filenames.isEmpty {
+                let atlases = projectCore.atlases
+
+                if atlases.isEmpty {
+                    Console.write("WARNING: Atlas '\(atlas.abbreviatingWithTildeInPath)' is empty")
+                    return true
+                }
+
+                exportManager.export(atlases: atlases) { message in
+                    Console.write(message)
+                }
+
+                return true
+            }
+
+            guard exportWithFilesArgument(projectCore, manager: exportManager) else { return false }
         }
         return true
     }
 
-    fileprivate func export(_ project: ProjectCore) -> Bool {
-        guard _args.options.contains(.files), !_args.filenames.isEmpty else { return false }
-//                "~/Documents/Sounds"
-//                "/Users/todddenlinger/Documents/Sounds"
-//                "Sounds"
-//                "someimage.png"
-//                "Sounds/someimage.png"
-
+    fileprivate func exportWithFilesArgument(_ project: ProjectCore, manager: ExportManager) -> Bool {
         let documentURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
         var exportCount = 0
-        
+
         for filename in _args.filenames {
             let expanded: URL
-            
+
             do {
                 guard let work = filename.expandingTildeInPath.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed), let url = URL(string: work) else {
                     Console.write("WARNING: could not export argument '\(filename)'")
@@ -289,28 +312,28 @@ extension CLI {
                     prjIdx = nil
                 }
             }
-            
+
             guard let pIdx = prjIdx else { continue }
             let atlas = project.atlases[pIdx]
             exportCount += 1
 
             if let sIdx = svgIdx {
-                ExportManager.export(atlas: atlas, svgFile: atlas.svgFiles[sIdx], async: false) { message in
+                manager.export(atlas: atlas, svgFile: atlas.svgFiles[sIdx]) { message in
                     Console.write(message)
                 }
-                
+
             } else {
-                ExportManager.export(atlas: project.atlases[pIdx], async: false) { message in
+                manager.export(atlas: project.atlases[pIdx]) { message in
                     Console.write(message)
                 }
             }
         }
-        
+
         if exportCount == 0 {
             Console.write("Nothing to export")
             return false
         }
-        
+
         return true
     }
 }

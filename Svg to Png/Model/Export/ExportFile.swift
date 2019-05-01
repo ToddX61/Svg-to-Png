@@ -8,6 +8,8 @@ struct ExportFile: CustomStringConvertible {
 
     var width = 0
     var height = 0
+    var originalWidth = 0
+    var originalHeight = 0
     var inputURL: URL?
     var outputURL: URL?
     var errors = ExportFileErrors()
@@ -57,9 +59,14 @@ struct ExportFile: CustomStringConvertible {
             }
 
             exportFile.outputURL = resolution.transformURL(url: outputFolder.appendingPathComponent(svgFile.outputFilename, isDirectory: false))
-
-            exportFile.width = (svgFile.width == 0 ? atlas.defaultWidth : svgFile.width) * resolution.multiplier
-            exportFile.height = (svgFile.height == 0 ? atlas.defaultHeight : svgFile.height) * resolution.multiplier
+            
+            let svgWidth = svgFile.width == 0 ? atlas.defaultWidth : svgFile.width
+            let svgHeight = svgFile.height == 0 ? atlas.defaultHeight : svgFile.height
+            
+            exportFile.originalWidth = svgWidth
+            exportFile.originalHeight = svgHeight
+            exportFile.width = svgWidth * resolution.multiplier
+            exportFile.height = svgHeight * resolution.multiplier
 
             if exportFile.width <= 0 {
                 errors.insert(.invalidWidth)

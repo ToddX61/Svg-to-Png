@@ -63,23 +63,11 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "~/Documents/Test.svgproj &quot;~/Documents/Test copy.svgproj&quot;"
+            argument = "&quot;~/Documents/Test copy&quot;"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "-fSounds rounded_1111.svg"
-            isEnabled = "YES">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "./me.png"
-            isEnabled = "YES">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "&quot;what the &quot;"
-            isEnabled = "YES">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "&quot;~/Documents/Xcode Projects&quot;"
+            argument = "-c1"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>

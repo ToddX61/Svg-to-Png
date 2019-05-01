@@ -62,6 +62,14 @@ struct ExportCommands: Codable {
         get { return _commands }
         set { _commands = newValue }
     }
+    
+    var transformed: [_ExportCommand] {
+        var result = [_ExportCommand]()
+        for idx in 0 ..< _commands.count {
+            result.append(_commands[idx].obj)
+        }
+        return result
+    }
 
     var defaultCommand: ExportCommand? {
         return _commands.first { $0.obj.options.contains(.isDefault) }
@@ -130,7 +138,7 @@ struct ExportCommands: Codable {
     static var predefined: ExportCommands {
         let _predefined = [
             "rsvg-convert -w @width -h @height \"@source\" -o \"@target\"",
-            "svgexport \"@tsource\" \"@target\" 100% @originalWidth:@originalHeight @width:@height",
+            "svgexport \"@source\" \"@target\" 100% @originalWidth:@originalHeight @width:@height",
             "magick convert -background none -size @widthx@height \"@source\" -alpha background \"@target\"",
             "inkscape \"@source\" --export-png=\"@target\" -w@width -h@height -z"
         ]

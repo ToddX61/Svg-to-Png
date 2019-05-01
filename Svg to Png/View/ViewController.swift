@@ -41,6 +41,8 @@ class ViewController: NSViewController {
     fileprivate var prj: AtlasArray {
         return document.prj
     }
+    
+    fileprivate var manager: ExportManager?
 
     //    MARK: - Overrides
 
@@ -345,6 +347,7 @@ class ViewController: NSViewController {
     }
 
     @IBAction func exportAll(_: Any) {
+        guard manager == nil else { return } // not currently exporting
         guard !prj.atlases.isEmpty,
             NSAlert.confirm("Export All Atlases?", suppressionKey: SuppressionKey.ExportAll) else { return }
 
@@ -353,10 +356,12 @@ class ViewController: NSViewController {
         }
 
         outputView.setString("Exporting...\n")
-        ExportManager.export(atlases: prj.atlases, completionHander: exportCompletion)
+        manager = ExportManager()
+        manager!.export(atlases: prj.atlases, completionHander: exportCompletion)
     }
 
     @IBAction func exportSelected(_: Any) {
+        guard manager == nil else { return } // not currently exporting
         let indices = selection()
         guard indices.atlas != _Indices.None,
             NSAlert.confirm("Export selected?", suppressionKey: SuppressionKey.Export)
@@ -364,11 +369,13 @@ class ViewController: NSViewController {
 
         outputView.setString("Exporting...\n")
         let atlas = prj.atlases[indices.atlas]
+        
+        manager = ExportManager()
 
         if indices.svg != _Indices.None {
-            ExportManager.export(atlas: atlas, svgFile: atlas.svgFiles[indices.svg], completionHander: exportCompletion)
+            manager!.export(atlas: atlas, svgFile: atlas.svgFiles[indices.svg], completionHander: exportCompletion)
         } else {
-            ExportManager.export(atlases: [atlas], completionHander: exportCompletion)
+            manager!.export(atlases: [atlas], completionHander: exportCompletion)
         }
     }
 
@@ -376,6 +383,7 @@ class ViewController: NSViewController {
         guard let self = self else { return }
         self.outputView.append("\(output)\n")
         self.outputView.scrollToEndOfDocument(self)
+        self.manager = nil
     }
 
     @IBAction func removeSelected(_ sender: Any) {
@@ -586,6 +594,8 @@ extension ViewController: NSMenuItemValidation {
 
             return selection().atlas != _Indices.None
         }
+        
+        guard title.hasPrefix("Export"), manager == nil else { return false }
 
         if title.hasPrefix("Sort All")
             || title.hasPrefix("Export All") {

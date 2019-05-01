@@ -20,11 +20,13 @@ enum ExportCommandMacro: String, CaseIterable {
 }
 
 extension Dictionary where Key == ExportCommandMacro, Value == Any {
-    init(_ source: Any? = nil, _ target: Any? = nil, _ width: Any? = nil, _ height: Any? = nil) {
+    init(_ source: Any? = nil, _ target: Any? = nil, _ width: Any? = nil, _ height: Any? = nil, _ originalWidth: Any? = nil, _ originalHeight: Any? = nil) {
         self.init()
         self[.source] = source
         self[.target] = target
         self[.width] = width
         self[.height] = height
+        self[.originalWidth] = originalWidth
+        self[.originalHeight] = originalHeight
     }
 }

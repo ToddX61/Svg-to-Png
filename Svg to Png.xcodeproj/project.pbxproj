@@ -21,7 +21,7 @@
 		DE4DE13C226F5C6000949E44 /* AppSuite.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4DE13A226F589E00949E44 /* AppSuite.swift */; };
 		DE5B648F223FDEE0003AFF06 /* PreferencesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE5B648D223FDEE0003AFF06 /* PreferencesController.swift */; };
 		DE5B6490223FDEE0003AFF06 /* PreferencesController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DE5B648E223FDEE0003AFF06 /* PreferencesController.xib */; };
-		DE6F8CE82273386F00A9F05B /* svgtopng in CopyFiles */ = {isa = PBXBuildFile; fileRef = DEA457D2226D12FD00937067 /* svgtopng */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		DE6F8CEC22737BD700A9F05B /* svgtopng in CopyFiles */ = {isa = PBXBuildFile; fileRef = DEA457D2226D12FD00937067 /* svgtopng */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		DE70144922577D0900C727A5 /* ExportCommandManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE70144822577D0900C727A5 /* ExportCommandManager.swift */; };
 		DE7293272240259D006E1A4C /* SuppressionKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7293262240259D006E1A4C /* SuppressionKey.swift */; };
 		DE735BFD224514A2008B4059 /* DebugLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE735BFC224514A2008B4059 /* DebugLog.swift */; };
@@ -75,13 +75,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		DEA457D0226D12FD00937067 /* CopyFiles */ = {
+		DE6F8CEB22737BA700A9F05B /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 12;
-			dstPath = /Applications;
+			buildActionMask = 2147483647;
+			dstPath = /usr/local/bin;
 			dstSubfolderSpec = 0;
 			files = (
-				DE6F8CE82273386F00A9F05B /* svgtopng in CopyFiles */,
+				DE6F8CEC22737BD700A9F05B /* svgtopng in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -289,7 +289,7 @@
 			buildPhases = (
 				DEA457CE226D12FD00937067 /* Sources */,
 				DEA457CF226D12FD00937067 /* Frameworks */,
-				DEA457D0226D12FD00937067 /* CopyFiles */,
+				DE6F8CEB22737BA700A9F05B /* CopyFiles */,
 			);
 			buildRules = (
 			);
