@@ -1,6 +1,11 @@
 
 import Foundation
 
+protocol ExportManagerDelegate {
+    func exportAttempted(result: String, exception: NSException?)
+    func exportComplete(attempted: Int)
+}
+
 class ExportManager {
     struct Arguments {
         var async: Bool
@@ -22,34 +27,64 @@ class ExportManager {
             }
         }
     }
-
+    
     fileprivate let arguments: Arguments
+    fileprivate var filesToExport: [ExportFile] = []
+    fileprivate var filesCompleted: Int = 0
 
-    init(_ arguments: Arguments? = nil) {
+    init(delegate: ExportManagerDelegate? = nil, arguments: Arguments? = nil) {
+        self.delegate = delegate
         self.arguments = arguments ?? Arguments()
     }
 
+    // MARK: - Public Properties
+    
+    var delegate: ExportManagerDelegate?
+    
     // MARK: - Public Functions
 
-    func export(atlases: [Atlas], completionHander: @escaping (_ ouput: String) -> Void) {
+    func export(atlases: [Atlas]) {
+        prepareToExport()
+
         for atlas in atlases {
-            export(atlas: atlas, completionHander: completionHander)
+            for svgFile in atlas.svgFiles {
+                _ = ExportFile.create(atlas: atlas, svgFile: svgFile).map { filesToExport.append($0) }
+            }
         }
+
+        _export()
     }
 
-    func export(atlas: Atlas, completionHander: @escaping (_ ouput: String) -> Void) {
+    func export(atlas: Atlas) {
+        prepareToExport()
+        
         for svgFile in atlas.svgFiles {
-            export(atlas: atlas, svgFile: svgFile, completionHander: completionHander)
+            _ = ExportFile.create(atlas: atlas, svgFile: svgFile).map { filesToExport.append($0) }
         }
+        
+        _export()
     }
 
-    func export(atlas: Atlas, svgFile: SVGFile, completionHander: @escaping (_ ouput: String) -> Void) {
-        let exportFiles = ExportFile.create(atlas: atlas, svgFile: svgFile)
+    func export(atlas: Atlas, svgFile: SVGFile) {
+        prepareToExport()
+        
+        _ = ExportFile.create(atlas: atlas, svgFile: svgFile).map { filesToExport.append($0) }
+        
+        _export()
+    }
 
-        for exportFile in exportFiles {
+    // MARK: - Private Functions
+
+    fileprivate func prepareToExport() {
+        filesToExport.removeAll(keepingCapacity: true)
+        filesCompleted = 0
+    }
+
+    fileprivate func _export() {
+        for exportFile in filesToExport {
             guard exportFile.errors.isEmpty else {
                 let output = String(describing: exportFile)
-                completionHander(output)
+                ExportManager.completeExportFile(manager: self, result: output)
                 continue
             }
 
@@ -59,8 +94,7 @@ class ExportManager {
             if !arguments.async {
                 let cmd = performBash(exportFile: exportFile, output: &output, exception: &exception)
                 let result = transformOutput(exportFile: exportFile, command: cmd, output: output, exception: exception)
-
-                completionHander(result)
+                ExportManager.completeExportFile(manager: self, result: result, exception: exception)
                 return
             }
 
@@ -73,14 +107,21 @@ class ExportManager {
                     guard let self = self else { return }
 
                     let result = self.transformOutput(exportFile: exportFile, command: cmd, output: output, exception: exception)
-
-                    completionHander(result)
+                    
+                    ExportManager.completeExportFile(manager: self, result: result, exception: exception)
                 }
             }
         }
     }
-
-    // MARK: - private methods
+    
+    fileprivate class func completeExportFile(manager: ExportManager?, result: String, exception: NSException? = nil) {
+        guard let _manager = manager else { return }
+        _manager.delegate?.exportAttempted(result: result, exception: exception)
+        _manager.filesCompleted += 1
+        if _manager.filesCompleted == _manager.filesToExport.count {
+            _manager.delegate?.exportComplete(attempted: _manager.filesCompleted)
+        }
+    }
     
     fileprivate func performBash(exportFile: ExportFile, output: inout String?, exception: inout NSException?) -> ProcessCommand {
         let cmd = buildExportCommand(exportFile: exportFile)

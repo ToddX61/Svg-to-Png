@@ -18,16 +18,16 @@ class CLI {
     static let Version = "1.1.1"
     static let Copyright = "Copyright © 2019 Todd Denlinger. All rights reserved."
 
-    //    MARK: - private properties
+    //    MARK: - Private Properties
 
     fileprivate var _args = CLIArguments()
     fileprivate var _currentOption: OptionType = .unknown
 
-    //    MARK: - public methods
+    //    MARK: - Public Properties
 
     var arguments: CLIArguments { return _args }
 
-    //    MARK: - class methods
+    //    MARK: - Class Methods
 
     class func printUsage(printHelp: Bool = true) {
         let executableName = (CommandLine.arguments[0] as NSString).lastPathComponent
@@ -51,7 +51,7 @@ class CLI {
         }
     }
 
-    //    MARK: - public methods
+    //    MARK: - Public Methods
 
     func run() {
         //        following func's return a Bool: whether should continuing processing?
@@ -60,7 +60,7 @@ class CLI {
         guard export() else { return }
     }
 
-    //    MARK: - private methods
+    //    MARK: - Private Methods
 
     fileprivate func processArguments() -> Bool {
         if CommandLine.argc == 1 {
@@ -231,16 +231,14 @@ class CLI {
     }
 }
 
-//  MARK: - exporting
+//  MARK: - Exporting
 
 extension CLI {
-    //    MARK: - exporting
-
     fileprivate func export() -> Bool {
         guard _args.options.contains(.export) else { return true }
         let fileManager = FileManager()
         let exportArguments = ExportManager.Arguments(async: false, command: _args.exportCommand)
-        let exportManager = ExportManager(exportArguments)
+        let exportManager = ExportManager(delegate: self, arguments: exportArguments)
 
         for atlas in _args.projects {
             let expanded = atlas.expandingTildeInPath
@@ -265,10 +263,7 @@ extension CLI {
                     return true
                 }
 
-                exportManager.export(atlases: atlases) { message in
-                    Console.write(message)
-                }
-
+                exportManager.export(atlases: atlases)
                 return true
             }
 
@@ -318,14 +313,9 @@ extension CLI {
             exportCount += 1
 
             if let sIdx = svgIdx {
-                manager.export(atlas: atlas, svgFile: atlas.svgFiles[sIdx]) { message in
-                    Console.write(message)
-                }
-
+                manager.export(atlas: atlas, svgFile: atlas.svgFiles[sIdx])
             } else {
-                manager.export(atlas: project.atlases[pIdx]) { message in
-                    Console.write(message)
-                }
+                manager.export(atlas: project.atlases[pIdx])
             }
         }
 
@@ -336,4 +326,14 @@ extension CLI {
 
         return true
     }
+}
+
+// MARK: - ExportManagerDelegate
+
+extension CLI: ExportManagerDelegate {
+    func exportAttempted(result: String, exception: NSException?) {
+        Console.write(result)
+    }
+
+    func exportComplete(attempted: Int) {}
 }

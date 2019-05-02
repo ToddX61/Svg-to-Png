@@ -41,7 +41,7 @@ class ViewController: NSViewController {
     fileprivate var prj: AtlasArray {
         return document.prj
     }
-    
+
     fileprivate var manager: ExportManager?
 
     //    MARK: - Overrides
@@ -301,10 +301,10 @@ class ViewController: NSViewController {
 
             svgIdx = (selected.atlas == atlasIdx
                 ? selected.svg : atlases[atlasIdx].svgFiles.count - 1) + 1
-            
+
             svgAdded = true
             var svgFile = SVGFile(filename: filename)
-            
+
             if let parser = SvgParser(svgURL: url) {
                 parser.parse()
                 if let error = parser.error {
@@ -356,8 +356,8 @@ class ViewController: NSViewController {
         }
 
         outputView.setString("Exporting...\n")
-        manager = ExportManager()
-        manager!.export(atlases: prj.atlases, completionHander: exportCompletion)
+        manager = ExportManager(delegate: self)
+        manager!.export(atlases: prj.atlases)
     }
 
     @IBAction func exportSelected(_: Any) {
@@ -369,21 +369,14 @@ class ViewController: NSViewController {
 
         outputView.setString("Exporting...\n")
         let atlas = prj.atlases[indices.atlas]
-        
-        manager = ExportManager()
+
+        manager = ExportManager(delegate: self)
 
         if indices.svg != _Indices.None {
-            manager!.export(atlas: atlas, svgFile: atlas.svgFiles[indices.svg], completionHander: exportCompletion)
+            manager!.export(atlas: atlas, svgFile: atlas.svgFiles[indices.svg])
         } else {
-            manager!.export(atlases: [atlas], completionHander: exportCompletion)
+            manager!.export(atlases: [atlas])
         }
-    }
-
-    lazy var exportCompletion: (String) -> Void = { [weak self] (output: String) -> Void in
-        guard let self = self else { return }
-        self.outputView.append("\(output)\n")
-        self.outputView.scrollToEndOfDocument(self)
-        self.manager = nil
     }
 
     @IBAction func removeSelected(_ sender: Any) {
@@ -594,7 +587,7 @@ extension ViewController: NSMenuItemValidation {
 
             return selection().atlas != _Indices.None
         }
-        
+
         guard title.hasPrefix("Export"), manager == nil else { return false }
 
         if title.hasPrefix("Sort All")
@@ -756,5 +749,20 @@ extension ViewController: PathControlDelegate {
 
         prj.atlases[indices.atlas].outputFolder = url?.path ?? ""
         document.updateChangeCount(.changeDone)
+    }
+}
+
+// MARK: - ExportManagerDelegate
+
+extension ViewController: ExportManagerDelegate {
+    func exportAttempted(result: String, exception: NSException?) {
+        outputView.append("\(result)\n")
+        outputView.scrollToEndOfDocument(self)
+    }
+
+    func exportComplete(attempted: Int) {
+        outputView.append("Done!")
+        outputView.scrollToEndOfDocument(self)
+        manager = nil
     }
 }
