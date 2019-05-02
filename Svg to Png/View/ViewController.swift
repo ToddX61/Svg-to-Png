@@ -587,8 +587,10 @@ extension ViewController: NSMenuItemValidation {
 
             return selection().atlas != _Indices.None
         }
-
-        guard title.hasPrefix("Export"), manager == nil else { return false }
+        
+        if title.hasPrefix("Export"), manager != nil {
+            return false
+        }
 
         if title.hasPrefix("Sort All")
             || title.hasPrefix("Export All") {
@@ -615,7 +617,7 @@ extension ViewController: NSMenuItemValidation {
         if title.hasPrefix("Redo") {
             return undoManager?.canRedo ?? false
         }
-
+        
         return true
     }
 }
