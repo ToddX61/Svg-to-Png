@@ -27,7 +27,7 @@ class ExportManager {
             }
         }
     }
-    
+
     fileprivate let arguments: Arguments
     fileprivate var filesToExport: [ExportFile] = []
     fileprivate var filesCompleted: Int = 0
@@ -38,9 +38,9 @@ class ExportManager {
     }
 
     // MARK: - Public Properties
-    
+
     var delegate: ExportManagerDelegate?
-    
+
     // MARK: - Public Functions
 
     func export(atlases: [Atlas]) {
@@ -48,7 +48,7 @@ class ExportManager {
 
         for atlas in atlases {
             for svgFile in atlas.svgFiles {
-                _ = ExportFile.create(atlas: atlas, svgFile: svgFile).map { filesToExport.append($0) }
+                _ = ExportFile.create(atlas: atlas, svgFile: svgFile, size: arguments.size, resolutions: arguments.resolutions).map { filesToExport.append($0) }
             }
         }
 
@@ -57,19 +57,17 @@ class ExportManager {
 
     func export(atlas: Atlas) {
         prepareToExport()
-        
+
         for svgFile in atlas.svgFiles {
-            _ = ExportFile.create(atlas: atlas, svgFile: svgFile).map { filesToExport.append($0) }
+            _ = ExportFile.create(atlas: atlas, svgFile: svgFile, size: arguments.size, resolutions: arguments.resolutions).map { filesToExport.append($0) }
         }
-        
+
         _export()
     }
 
     func export(atlas: Atlas, svgFile: SVGFile) {
         prepareToExport()
-        
-        _ = ExportFile.create(atlas: atlas, svgFile: svgFile).map { filesToExport.append($0) }
-        
+        _ = ExportFile.create(atlas: atlas, svgFile: svgFile, size: arguments.size, resolutions: arguments.resolutions).map { filesToExport.append($0) }
         _export()
     }
 
@@ -92,28 +90,28 @@ class ExportManager {
             var exception: NSException?
 
             if !arguments.async {
-                let cmd = performBash(exportFile: exportFile, output: &output, exception: &exception)
+                let cmd = bash(exportFile: exportFile, output: &output, exception: &exception)
                 let result = transformOutput(exportFile: exportFile, command: cmd, output: output, exception: exception)
                 ExportManager.completeExportFile(manager: self, result: result, exception: exception)
-                return
+                continue
             }
 
             DispatchQueue.global(qos: .background).async { [weak self] in
                 guard let self = self else { return }
 
-                let cmd = self.performBash(exportFile: exportFile, output: &output, exception: &exception)
+                let cmd = self.bash(exportFile: exportFile, output: &output, exception: &exception)
 
                 DispatchQueue.main.async { [weak self] in
                     guard let self = self else { return }
 
                     let result = self.transformOutput(exportFile: exportFile, command: cmd, output: output, exception: exception)
-                    
+
                     ExportManager.completeExportFile(manager: self, result: result, exception: exception)
                 }
             }
         }
     }
-    
+
     fileprivate class func completeExportFile(manager: ExportManager?, result: String, exception: NSException? = nil) {
         guard let _manager = manager else { return }
         _manager.delegate?.exportAttempted(result: result, exception: exception)
@@ -122,15 +120,21 @@ class ExportManager {
             _manager.delegate?.exportComplete(attempted: _manager.filesCompleted)
         }
     }
-    
-    fileprivate func performBash(exportFile: ExportFile, output: inout String?, exception: inout NSException?) -> ProcessCommand {
+
+    fileprivate func bash(exportFile: ExportFile, output: inout String?, exception: inout NSException?) -> ProcessCommand {
         let cmd = buildExportCommand(exportFile: exportFile)
+
+//      useful for debugging new or modified export commands:
         debugLog(cmd.description)
+
         SwiftTryCatch.try(
             {
+//                var commandLine = cmd.command
+//                _ = cmd.arguments.map { commandLine += " \($0)"}
+//                output = Bash.shell(commandLine)
                 output = Bash.execute(commandName: cmd.command, arguments: cmd.arguments) ?? ""
             },
-            catch: { error in print(error); exception = error },
+            catch: { error in debugLog(error); exception = error },
             finally: {}
         )
         return cmd
