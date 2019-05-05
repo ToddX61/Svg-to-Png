@@ -12,6 +12,7 @@ struct ExportFile: CustomStringConvertible {
     var originalHeight = 0
     var inputURL: URL?
     var outputURL: URL?
+    var resolutions: Resolutions?
     var errors = ExportFileErrors()
 
     var description: String {
@@ -19,13 +20,20 @@ struct ExportFile: CustomStringConvertible {
         return "Error exporting \(inputURL?.abbreviatingWithTildeInPath ?? "(Unkown)"):\n\t\(errors.description)"
     }
 
-    static func create(atlas: Atlas, svgFile: SVGFile) -> [ExportFile] {
+    static func create(atlas: Atlas, svgFile: SVGFile, size: CGSize? = nil, resolutions: Resolutions? = nil) -> [ExportFile] {
         var results = [ExportFile]()
 
         let fileManager = FileManager.default
-        let resolutions = Resolutions.create(rawValue: svgFile.resolutions)
+        let _resolutions: Resolutions
+        
+        if let work = resolutions, !work.isEmpty {
+            _resolutions = work
+        }
+        else {
+            _resolutions = Resolutions.create(rawValue: svgFile.resolutions)
+        }
 
-        for resolution in resolutions {
+        for resolution in _resolutions {
             var exportFile = ExportFile()
             var errors = ExportFileErrors()
             let inputFolder = URL(fileURLWithPath: atlas.folder, isDirectory: true)
