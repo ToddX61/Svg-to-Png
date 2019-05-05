@@ -37,7 +37,7 @@ enum OptionType: String, Option {
         case .size:
             return "override the svg files' width and height: \(flag) 26:32"
         case .resolutions:
-            return "resolutions to export: \(flag) '1,2,3' '2,3', '1' etc... \n\t\tThe default is to use the svg file's resolutions selected in the svg project"
+            return "resolutions to export: \(flag) 1,2,3 or 2,3, 1 ...etc... \n\t\tdefault is to use the svg file's resolutions defined in the svg project"
         case .exportCommand:
             return "the index of the export command to use when exporting: \(flag)3\n\t\tdefaults to the default defined in 'Svg to Png'"
         default:
