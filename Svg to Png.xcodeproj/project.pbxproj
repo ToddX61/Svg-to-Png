@@ -268,8 +268,8 @@
 				DE3CB5712254077C006AFB4A /* ExportCommands.swift */,
 				DE02848822331F4C00C163F6 /* ExportFile.swift */,
 				DE993441222C5F0E006A9A0A /* ExportManager.swift */,
-				DE3CB5742254E459006AFB4A /* ProcessCommand.swift */,
 				DEE2D77F22819E5E0068E5A3 /* ExportPreferences.swift */,
+				DE3CB5742254E459006AFB4A /* ProcessCommand.swift */,
 			);
 			path = Export;
 			sourceTree = "<group>";
