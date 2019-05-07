@@ -70,6 +70,7 @@
 		DECCCC84226A178800B1393D /* DoubleToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = DECCCC83226A178800B1393D /* DoubleToken.swift */; };
 		DECE6BE42236A089009590EF /* URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = DECE6BE32236A089009590EF /* URL.swift */; };
 		DECE6BEB2236D44E009590EF /* SwiftTryCatch.m in Sources */ = {isa = PBXBuildFile; fileRef = DECE6BEA2236D44E009590EF /* SwiftTryCatch.m */; };
+		DEE2D78022819E5E0068E5A3 /* ExportPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE2D77F22819E5E0068E5A3 /* ExportPreferences.swift */; };
 		DEECEFEB2220171100A9026F /* NSAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEECEFEA2220171100A9026F /* NSAlert.swift */; };
 		DEF6739A22295E8A002C47AA /* WindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF6739922295E8A002C47AA /* WindowController.swift */; };
 /* End PBXBuildFile section */
@@ -133,6 +134,7 @@
 		DECE6BE82236D3D7009590EF /* Svg to Png-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Svg to Png-Bridging-Header.h"; sourceTree = "<group>"; };
 		DECE6BE92236D44E009590EF /* SwiftTryCatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwiftTryCatch.h; sourceTree = "<group>"; };
 		DECE6BEA2236D44E009590EF /* SwiftTryCatch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwiftTryCatch.m; sourceTree = "<group>"; };
+		DEE2D77F22819E5E0068E5A3 /* ExportPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportPreferences.swift; sourceTree = "<group>"; };
 		DEECEFEA2220171100A9026F /* NSAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSAlert.swift; sourceTree = "<group>"; };
 		DEF6739922295E8A002C47AA /* WindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -267,6 +269,7 @@
 				DE02848822331F4C00C163F6 /* ExportFile.swift */,
 				DE993441222C5F0E006A9A0A /* ExportManager.swift */,
 				DE3CB5742254E459006AFB4A /* ProcessCommand.swift */,
+				DEE2D77F22819E5E0068E5A3 /* ExportPreferences.swift */,
 			);
 			path = Export;
 			sourceTree = "<group>";
@@ -420,6 +423,7 @@
 				DEF6739A22295E8A002C47AA /* WindowController.swift in Sources */,
 				DEC03BBE221F25CF00C00B00 /* Resolutions.swift in Sources */,
 				DEC03BAE221F242000C00B00 /* SvgProject.swift in Sources */,
+				DEE2D78022819E5E0068E5A3 /* ExportPreferences.swift in Sources */,
 				DECCCC84226A178800B1393D /* DoubleToken.swift in Sources */,
 				DEC7513022522CF30003F116 /* CommandController.swift in Sources */,
 				DECE6BEB2236D44E009590EF /* SwiftTryCatch.m in Sources */,
