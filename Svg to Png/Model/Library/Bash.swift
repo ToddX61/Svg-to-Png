@@ -1,31 +1,81 @@
 
-// slightly modified from 'Bash.swift' at:
+// modified from 'Bash.swift' at:
 // https://gist.github.com/andreacipriani/8c3af3719da31c8fae2cdfa8c21e17ba
 
 import Foundation
 
-class Bash {
-    // MARK: - CommandExecuting
-
-    class func execute(commandName: String) -> String? {
-        return execute(commandName: commandName, arguments: [])
+struct EnvironmentPaths {
+    static let DefaultPaths = "/opt/local/bin:/opt/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin"
+    var paths: [String]
+    
+    init() {
+        let envPathString = EnvironmentPaths.getEnvironmentPaths()
+        let defaultPaths = EnvironmentPaths.DefaultPaths.split(separator: ":", maxSplits: Int.max, omittingEmptySubsequences: true)
+        let envPaths = envPathString.split(separator: ":", maxSplits: Int.max, omittingEmptySubsequences: true)
+        
+        paths = []
+        _ = defaultPaths.map { paths.append($0.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)) }
+        _ = envPaths.map { paths.append($0.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)) }
     }
+    
+    fileprivate static func getEnvironmentPaths() -> String {
+        let environment = ProcessInfo.processInfo.environment
+        guard let pathString = environment["PATH"] else { return "" }
+        return pathString
+    }
+    
+    var combined: String {
+        var dictionary = [String : Int]()
+        for (idx, path) in paths.enumerated() {
+            guard dictionary[path] == nil else { continue }
+            dictionary[path] = idx
+        }
+        
+        var result = ""
+        let work = dictionary.sorted { $0.1 < $1.1 }
+        let lastIdx = work.count - 1
+        for (idx,element) in work.enumerated() {
+            result += (element.key.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines))
+            if idx != lastIdx {
+                result += ":"
+            }
+        }
+        return result
+    }
+    
+}
 
-    class func execute(commandName: String, arguments: [String]) -> String? {
-        guard var bashCommand = execute(command: "/bin/bash", arguments: ["-l", "-c", "which \(commandName)"]) else { return "\(commandName) not found" }
+class Bash {
+    fileprivate lazy var _paths: EnvironmentPaths = EnvironmentPaths()
+    
+    init(addEnvironmentPaths: [String]? = ["/usr/local/bin"]) {
+        guard let epaths = addEnvironmentPaths else { return }
+        _paths.paths.append(contentsOf: epaths)
+    }
+    
+    // MARK: - Public Methods
+    
+    func execute(commandName: String, arguments: [String]) -> String? {
+        guard var bashCommand = _execute(command: "/bin/bash", arguments: ["-l", "-c", "which \(commandName)"]) else { return "'\(commandName)' not found" }
+        guard !bashCommand.isEmpty else { return "'\(commandName)' not found" }
         bashCommand = bashCommand.trimmingCharacters(in: NSCharacterSet.whitespacesAndNewlines)
-        return execute(command: bashCommand, arguments: arguments)
+        return _execute(command: bashCommand, arguments: arguments)
     }
 
     // MARK: Private
 
     // process.lanuch() will throw an NSException on invalid command
-    private class func execute(command: String, arguments: [String] = []) -> String? {
+    fileprivate func _execute(command: String, arguments: [String] = []) -> String? {
         let process = Process()
         process.launchPath = command
         process.arguments = arguments
 
         let pipe = Pipe()
+        
+        var environment = ProcessInfo.processInfo.environment
+        environment["PATH"] = _paths.combined
+        process.environment = environment
+
         process.standardOutput = pipe
         process.standardError = pipe
 

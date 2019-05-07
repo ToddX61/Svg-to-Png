@@ -31,6 +31,7 @@ class ExportManager {
     fileprivate let arguments: Arguments
     fileprivate var filesToExport: [ExportFile] = []
     fileprivate var filesCompleted: Int = 0
+    fileprivate let bash = Bash()
 
     init(delegate: ExportManagerDelegate? = nil, arguments: Arguments? = nil) {
         self.delegate = delegate
@@ -124,15 +125,12 @@ class ExportManager {
     fileprivate func bash(exportFile: ExportFile, output: inout String?, exception: inout NSException?) -> ProcessCommand {
         let cmd = buildExportCommand(exportFile: exportFile)
 
-//      useful for debugging new or modified export commands:
-        debugLog(cmd.description)
+//        useful for debugging new or modified export commands:
+//        debugLog(cmd.description)
 
         SwiftTryCatch.try(
             {
-//                var commandLine = cmd.command
-//                _ = cmd.arguments.map { commandLine += " \($0)"}
-//                output = Bash.shell(commandLine)
-                output = Bash.execute(commandName: cmd.command, arguments: cmd.arguments) ?? ""
+                output = bash.execute(commandName: cmd.command, arguments: cmd.arguments) ?? ""
             },
             catch: { error in debugLog(error); exception = error },
             finally: {}

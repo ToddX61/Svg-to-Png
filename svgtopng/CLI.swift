@@ -10,6 +10,8 @@ struct CLIArguments {
     var resolutions = Resolutions()
     var projects = [String]()
     var filenames = [String]()
+    
+    var size: CGSize { return CGSize(width: width, height: height) }
 }
 
 class CLI {
@@ -237,7 +239,7 @@ extension CLI {
     fileprivate func export() -> Bool {
         guard _args.options.contains(.export) else { return true }
         let fileManager = FileManager()
-        let exportArguments = ExportManager.Arguments(async: false, command: _args.exportCommand)
+        let exportArguments = ExportManager.Arguments(async: false, command: _args.exportCommand, size: _args.size, resolutions: _args.resolutions)
         let exportManager = ExportManager(delegate: self, arguments: exportArguments)
 
         for atlas in _args.projects {
