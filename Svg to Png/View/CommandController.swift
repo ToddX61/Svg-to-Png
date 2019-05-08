@@ -170,6 +170,8 @@ extension CommandController: NSTextViewDelegate {
     }
 }
 
+// MARK: - NSWindowDelegate
+
 extension CommandController: NSWindowDelegate {
     func windowWillClose(_: Notification) {
         save()
