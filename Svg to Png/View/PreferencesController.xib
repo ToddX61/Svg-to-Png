@@ -16,11 +16,11 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView id="Hz6-mo-xeY">
-            <rect key="frame" x="0.0" y="0.0" width="589" height="204"/>
+            <rect key="frame" x="0.0" y="0.0" width="589" height="228"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mgV-N4-Zmg">
-                    <rect key="frame" x="18" y="167" width="294" height="17"/>
+                    <rect key="frame" x="18" y="191" width="294" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" title="Export Command Search Paths (delimited by ':')" id="50P-Eb-1qk">
                         <font key="font" metaFont="system"/>
@@ -29,7 +29,7 @@
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8Cf-ie-EPj">
-                    <rect key="frame" x="20" y="143" width="549" height="22"/>
+                    <rect key="frame" x="20" y="167" width="549" height="22"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" placeholderString="example: /users/someuser/Public:/users/someuser/custom_svg_exporter" drawsBackground="YES" usesSingleLineMode="YES" id="o6M-Sp-8XT">
                         <font key="font" metaFont="system"/>
@@ -41,7 +41,7 @@
                     </connections>
                 </textField>
                 <box autoresizesSubviews="NO" fixedFrame="YES" borderType="line" title="Options" translatesAutoresizingMaskIntoConstraints="NO" id="qc8-U6-lCS">
-                    <rect key="frame" x="17" y="56" width="555" height="72"/>
+                    <rect key="frame" x="17" y="80" width="555" height="72"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <view key="contentView" id="6nL-fQ-dwh">
                         <rect key="frame" x="3" y="3" width="549" height="54"/>
@@ -61,17 +61,6 @@
                         </subviews>
                     </view>
                 </box>
-                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dNH-6u-sEH">
-                    <rect key="frame" x="125" y="13" width="230" height="32"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="push" title="Reset &quot;Don't Ask Me&quot; Warnings" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Iv0-ei-ugn">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="resetDialogButtons:" target="-2" id="5V2-JP-3OT"/>
-                    </connections>
-                </button>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QQk-A4-7Cr">
                     <rect key="frame" x="18" y="24" width="107" height="17"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -81,8 +70,39 @@
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="n4Q-ef-ad4">
+                    <rect key="frame" x="18" y="52" width="94" height="17"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" lineBreakMode="clipping" title="Add or Modify:" id="3F9-LT-Aue">
+                        <font key="font" usesAppearanceFont="YES"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6iA-kF-leq">
+                    <rect key="frame" x="131" y="41" width="152" height="32"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="push" title="Export Commands" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="zsa-no-Js2">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="exportCommansButton:" target="-2" id="shz-5S-MCP"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dNH-6u-sEH">
+                    <rect key="frame" x="131" y="13" width="230" height="32"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="push" title="Reset &quot;Don't Ask Me&quot; Warnings" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Iv0-ei-ugn">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="resetDialogButtons:" target="-2" id="5V2-JP-3OT"/>
+                    </connections>
+                </button>
             </subviews>
-            <point key="canvasLocation" x="186.5" y="120"/>
+            <point key="canvasLocation" x="186.5" y="132"/>
         </customView>
     </objects>
 </document>
