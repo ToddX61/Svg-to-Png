@@ -19,6 +19,8 @@
 		DE4A78682268938F00FB876C /* SvgParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4A78672268938F00FB876C /* SvgParser.swift */; };
 		DE4DE13B226F589E00949E44 /* AppSuite.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4DE13A226F589E00949E44 /* AppSuite.swift */; };
 		DE4DE13C226F5C6000949E44 /* AppSuite.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4DE13A226F589E00949E44 /* AppSuite.swift */; };
+		DE52FC1F2286242800A77EDC /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE52FC1E2286242800A77EDC /* FileManager.swift */; };
+		DE52FC202286242800A77EDC /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE52FC1E2286242800A77EDC /* FileManager.swift */; };
 		DE5B648F223FDEE0003AFF06 /* PreferencesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE5B648D223FDEE0003AFF06 /* PreferencesController.swift */; };
 		DE5B6490223FDEE0003AFF06 /* PreferencesController.xib in Resources */ = {isa = PBXBuildFile; fileRef = DE5B648E223FDEE0003AFF06 /* PreferencesController.xib */; };
 		DE6F8CEC22737BD700A9F05B /* svgtopng in CopyFiles */ = {isa = PBXBuildFile; fileRef = DEA457D2226D12FD00937067 /* svgtopng */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
@@ -101,6 +103,7 @@
 		DE3CB5742254E459006AFB4A /* ProcessCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessCommand.swift; sourceTree = "<group>"; };
 		DE4A78672268938F00FB876C /* SvgParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SvgParser.swift; sourceTree = "<group>"; };
 		DE4DE13A226F589E00949E44 /* AppSuite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSuite.swift; sourceTree = "<group>"; };
+		DE52FC1E2286242800A77EDC /* FileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
 		DE5B648D223FDEE0003AFF06 /* PreferencesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesController.swift; sourceTree = "<group>"; };
 		DE5B648E223FDEE0003AFF06 /* PreferencesController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PreferencesController.xib; sourceTree = "<group>"; };
 		DE70144822577D0900C727A5 /* ExportCommandManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportCommandManager.swift; sourceTree = "<group>"; };
@@ -211,6 +214,7 @@
 				DE0284862233109900C163F6 /* Set.swift */,
 				DE7398522235C4FF00D87AC3 /* String.swift */,
 				DECE6BE32236A089009590EF /* URL.swift */,
+				DE52FC1E2286242800A77EDC /* FileManager.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -392,6 +396,7 @@
 				DEA457E9226D16B500937067 /* JSONRepresentable.swift in Sources */,
 				DEA457E6226D16B500937067 /* SwiftTryCatch.m in Sources */,
 				DEA457E5226D16AD00937067 /* ProcessCommand.swift in Sources */,
+				DE52FC202286242800A77EDC /* FileManager.swift in Sources */,
 				DEA457DB226D16A500937067 /* AtlasArray.swift in Sources */,
 				DEA457EB226D16C000937067 /* DoubleToken.swift in Sources */,
 				DEA457DC226D16A500937067 /* Project.swift in Sources */,
@@ -423,6 +428,7 @@
 				DEC03BAA221F242000C00B00 /* AppDelegate.swift in Sources */,
 				DE4DE13B226F589E00949E44 /* AppSuite.swift in Sources */,
 				DEF6739A22295E8A002C47AA /* WindowController.swift in Sources */,
+				DE52FC1F2286242800A77EDC /* FileManager.swift in Sources */,
 				DEC03BBE221F25CF00C00B00 /* Resolutions.swift in Sources */,
 				DEC03BAE221F242000C00B00 /* SvgProject.swift in Sources */,
 				DEE2D78022819E5E0068E5A3 /* ExportPreferences.swift in Sources */,
