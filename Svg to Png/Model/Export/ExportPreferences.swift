@@ -17,7 +17,7 @@ typealias JSONExportPreferences = JSONRepresentable<ExportPreferences>
 
 class ExportPreferencesManager {
     static let ExportPreferencesKey = "ExportPreferences"
-    static let preferences = ExportPreferences()
+    static let shared = ExportPreferencesManager()
     
     private var _preferences: ExportPreferences!
     private let internalQueue = DispatchQueue(label: "ExportPreferencerQueue", qos: .default, attributes: .concurrent)
@@ -38,5 +38,11 @@ class ExportPreferencesManager {
         } else {
             preferences = ExportPreferences()
         }
+    }
+    
+    public func save() {
+        let defaults = AppSuite.userDefaults()
+        defaults.set(JSONExportPreferences(object: preferences).jsonData, forKey: ExportPreferencesManager.ExportPreferencesKey)
+        defaults.synchronize()
     }
 }

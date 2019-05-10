@@ -73,6 +73,7 @@
 		DEE2D78022819E5E0068E5A3 /* ExportPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE2D77F22819E5E0068E5A3 /* ExportPreferences.swift */; };
 		DEECEFEB2220171100A9026F /* NSAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEECEFEA2220171100A9026F /* NSAlert.swift */; };
 		DEF6739A22295E8A002C47AA /* WindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF6739922295E8A002C47AA /* WindowController.swift */; };
+		DEF78B18228376400028F7D5 /* ExportPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE2D77F22819E5E0068E5A3 /* ExportPreferences.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -402,6 +403,7 @@
 				DE4DE13C226F5C6000949E44 /* AppSuite.swift in Sources */,
 				DEA457E0226D16AD00937067 /* ExportCommandMacro.swift in Sources */,
 				DEA457E7226D16B500937067 /* Bash.swift in Sources */,
+				DEF78B18228376400028F7D5 /* ExportPreferences.swift in Sources */,
 				DEA457DE226D16A500937067 /* SuppressionKey.swift in Sources */,
 				DEA457E4226D16AD00937067 /* ExportManager.swift in Sources */,
 				DEA457EE226D16E600937067 /* NSTextView.swift in Sources */,

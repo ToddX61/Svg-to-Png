@@ -8,14 +8,19 @@ struct EnvironmentPaths {
     static let DefaultPaths = "/opt/local/bin:/opt/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin"
     var paths: [String]
     
-    init() {
-        let envPathString = EnvironmentPaths.getEnvironmentPaths()
-        let defaultPaths = EnvironmentPaths.DefaultPaths.split(separator: ":", maxSplits: Int.max, omittingEmptySubsequences: true)
-        let envPaths = envPathString.split(separator: ":", maxSplits: Int.max, omittingEmptySubsequences: true)
+    init(additionalPaths: String = "") {
+        paths = EnvironmentPaths.toArray(additionalPaths)
+        paths.append(contentsOf: EnvironmentPaths.toArray(EnvironmentPaths.getEnvironmentPaths()))
+        paths.append(contentsOf: EnvironmentPaths.toArray(EnvironmentPaths.DefaultPaths))
+    }
+    
+    static func toArray(_ paths: String) -> [String] {
+        var result: [String] = []
         
-        paths = []
-        _ = defaultPaths.map { paths.append($0.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)) }
-        _ = envPaths.map { paths.append($0.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)) }
+        let argPaths = paths.split(separator: ":", maxSplits: Int.max, omittingEmptySubsequences: true)
+        _ = argPaths.map { result.append($0.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)) }
+        
+        return result
     }
     
     fileprivate static func getEnvironmentPaths() -> String {
@@ -46,11 +51,15 @@ struct EnvironmentPaths {
 }
 
 class Bash {
-    fileprivate lazy var _paths: EnvironmentPaths = EnvironmentPaths()
+    fileprivate var _paths: EnvironmentPaths = EnvironmentPaths()
     
     init(addEnvironmentPaths: [String]? = ["/usr/local/bin"]) {
         guard let epaths = addEnvironmentPaths else { return }
         _paths.paths.append(contentsOf: epaths)
+    }
+    
+    convenience init(addEnvironmentPaths: String) {
+        self.init(addEnvironmentPaths: EnvironmentPaths.toArray(addEnvironmentPaths))
     }
     
     // MARK: - Public Methods

@@ -239,7 +239,15 @@ extension CLI {
     fileprivate func export() -> Bool {
         guard _args.options.contains(.export) else { return true }
         let fileManager = FileManager()
-        let exportArguments = ExportManager.Arguments(async: false, command: _args.exportCommand, size: _args.size, resolutions: _args.resolutions)
+        
+        var preferences = ExportPreferencesManager.shared.preferences
+        var exportArguments = ExportManager.Arguments(async: false, command: _args.exportCommand, size: _args.size, resolutions: _args.resolutions)
+        
+        if _args.width != 0, _args.height != 0 {
+            preferences.folderSizeOverridesSvgSize = false
+        }
+        
+        exportArguments.preferences = preferences
         let exportManager = ExportManager(delegate: self, arguments: exportArguments)
 
         for atlas in _args.projects {

@@ -1,6 +1,18 @@
 
 import Foundation
 
+extension CGSize {
+    var nonsense: Bool { return width <= 0 || height <= 0 }
+}
+
+func * (_ size: CGSize, multiplier: Int) -> CGSize {
+    let mult = CGFloat(multiplier)
+    var result = CGSize(width: size.width, height: size.height)
+    result.width *= mult
+    result.height *= mult
+    return result
+}
+
 struct ExportFile: CustomStringConvertible {
     enum Error: String, Option {
         case invalidInputFolder, invalidInputFile, invalidOutputFolder, invalidWidth, invalidHeight
@@ -15,12 +27,34 @@ struct ExportFile: CustomStringConvertible {
     var resolutions: Resolutions?
     var errors = ExportFileErrors()
 
+    var size: CGSize {
+        get {
+            return CGSize(width: width, height: height)
+            
+        }
+        set {
+            width = Int(newValue.width)
+            height = Int(newValue.height)
+        }
+    }
+
+    var originalSize: CGSize {
+        get {
+            return CGSize(width: originalWidth, height: originalHeight)
+            
+        }
+        set {
+            originalWidth = Int(newValue.width)
+            originalHeight = Int(newValue.height)
+        }
+    }
+
     var description: String {
         guard !errors.isEmpty else { return "" }
         return "Error exporting \(inputURL?.abbreviatingWithTildeInPath ?? "(Unkown)"):\n\t\(errors.description)"
     }
 
-    static func create(atlas: Atlas, svgFile: SVGFile, size: CGSize? = nil, resolutions: Resolutions? = nil) -> [ExportFile] {
+    static func create(atlas: Atlas, svgFile: SVGFile, size: CGSize? = nil, resolutions: Resolutions? = nil, atlasSizeOverridesSvgSize: Bool = false) -> [ExportFile] {
         var results = [ExportFile]()
 
         let fileManager = FileManager.default
@@ -68,14 +102,21 @@ struct ExportFile: CustomStringConvertible {
 
             exportFile.outputURL = resolution.transformURL(url: outputFolder.appendingPathComponent(svgFile.outputFilename, isDirectory: false))
             
-            let svgWidth = svgFile.width == 0 ? atlas.defaultWidth : svgFile.width
-            let svgHeight = svgFile.height == 0 ? atlas.defaultHeight : svgFile.height
+            let svgSize = CGSize(width: svgFile.width, height: svgFile.height)
+            let argSize = size ?? CGSize(width: 0, height: 0)
+            let defaultSize = CGSize(width: atlas.defaultWidth, height: atlas.defaultHeight)
             
-            exportFile.originalWidth = svgWidth
-            exportFile.originalHeight = svgHeight
-            exportFile.width = svgWidth * resolution.multiplier
-            exportFile.height = svgHeight * resolution.multiplier
-
+            if !argSize.nonsense {
+                exportFile.size = argSize * resolution.multiplier
+                exportFile.originalSize = argSize
+            } else if atlasSizeOverridesSvgSize && !defaultSize.nonsense {
+                exportFile.size = defaultSize * resolution.multiplier
+                exportFile.originalSize = defaultSize
+            } else {
+                exportFile.size = svgSize * resolution.multiplier
+                exportFile.originalSize = svgSize
+            }
+            
             if exportFile.width <= 0 {
                 errors.insert(.invalidWidth)
             }
