@@ -25,9 +25,9 @@ class PreferencesController: NSViewController {
         NSAlert.removeAllSuppressionKeys()
     }
 
-    @IBAction func exportCommansButton(_ sender: Any) {
-        guard let app = NSApplication.shared.delegate as? AppDelegate else { return }
-        app.exportCommands(self)
+    @IBAction func exportCommandsButton(_ sender: Any) {
+        let app = NSApplication.shared.delegate as? AppDelegate
+        app?.exportCommands(self)
     }
     
     // MARK: - Overrides
