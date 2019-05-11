@@ -10,6 +10,7 @@ struct CLIArguments {
     var resolutions = Resolutions()
     var projects = [String]()
     var filenames = [String]()
+    var outputFolder: String = ""
     
     var size: CGSize { return CGSize(width: width, height: height) }
 }
@@ -123,6 +124,7 @@ class CLI {
             }
             return true
         case .resolutions:
+            _args.options.insert(_currentOption)
             let splits = argument.split(separator: ",", maxSplits: Int.max, omittingEmptySubsequences: true)
             guard !splits.isEmpty else { return true }
 
@@ -135,7 +137,6 @@ class CLI {
                 return false
             }
 
-            _args.options.insert(_currentOption)
             return true
         case .size:
             let splits = argument.split(separator: ":", maxSplits: Int.max, omittingEmptySubsequences: true)
@@ -178,6 +179,11 @@ class CLI {
 
             logArgumentError(argument)
             return false
+        case .outputFolder:
+            _args.options.insert(_currentOption)
+            guard !argument.isEmpty else { return true }
+            _args.outputFolder = argument
+            return true
         }
     }
 
@@ -196,18 +202,12 @@ class CLI {
 
         // assume we're exporting for now ... this may change later
         _args.options.insert(.export)
-
         guard validateExportCommand() else { return false }
+        guard validateOutputFolder() else { return false }
         return true
     }
 
     fileprivate func validateExportCommand() -> Bool {
-        if _args.projects.isEmpty {
-            CLI.printUsage(printHelp: true)
-            Console.write("No project file specified")
-            return false
-        }
-
         var commands = ExportCommandManager.shared.exportCommands
         commands.validate(repair: true)
         var idx = _args.exportCommandIdx
@@ -231,6 +231,40 @@ class CLI {
 
         return true
     }
+    
+    fileprivate func validateOutputFolder() -> Bool {
+        guard _args.options.contains(.outputFolder) else { return true }
+        
+        let outputFolder = _args.outputFolder.expandingTildeInPath
+        
+        if outputFolder.isEmpty {
+            Console.write(OptionType.outputFolder.flag, ": no output folder specified")
+            return false
+        }
+        
+        let url = URL(fileURLWithPath: outputFolder, isDirectory: true)
+        let manager = FileManager.default
+        
+        var isDirectory = ObjCBool(false)
+        let exists = manager.fileExists(atPath: url.path, isDirectory: &isDirectory)
+        
+        if exists && !isDirectory.boolValue {
+            Console.write(OptionType.outputFolder.flag, ": invalid output folder '", _args.outputFolder, "'")
+            return false
+        }
+        
+        _args.outputFolder = outputFolder
+        guard !exists else { return true }
+        
+        do {
+            try manager.createDirectory(at: url, withIntermediateDirectories: true)
+        }
+        catch {
+            Console.write("Unable to create output folder: ", error.localizedDescription)
+        }
+        
+        return true
+    }
 }
 
 //  MARK: - Exporting
@@ -241,7 +275,7 @@ extension CLI {
         let fileManager = FileManager()
         
         var preferences = ExportPreferencesManager.shared.preferences
-        var exportArguments = ExportManager.Arguments(async: false, command: _args.exportCommand, size: _args.size, resolutions: _args.resolutions)
+        var exportArguments = ExportManager.Arguments(async: false, command: _args.exportCommand, size: _args.size, resolutions: _args.resolutions, outputFolder: _args.outputFolder)
         
         if _args.width != 0, _args.height != 0 {
             preferences.folderSizeOverridesSvgSize = false

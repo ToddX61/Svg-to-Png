@@ -9,6 +9,7 @@ enum OptionType: String, Option {
     case size = "s"
     case resolutions = "r"
     case exportCommand = "c"
+    case outputFolder = "o"
     case unknown
     
     init(value: String) {

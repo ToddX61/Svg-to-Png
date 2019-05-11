@@ -1,9 +1,13 @@
-//
-//  FileManager.swift
-//  Svg to Png
-//
-//  Created by Todd Denlinger on 5/10/19.
-//  Copyright © 2019 Todd. All rights reserved.
-//
 
 import Foundation
+
+extension FileManager {
+    func isDirectory(_ url: URL) -> Bool {
+        var isDir: ObjCBool = ObjCBool(false)
+        if fileExists(atPath: url.path, isDirectory: &isDir) {
+            return isDir.boolValue
+        } else {
+            return false
+        }
+    }
+}

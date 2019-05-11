@@ -13,11 +13,13 @@ class ExportManager {
         var resolutions: Resolutions?
         var command: String
         var preferences: ExportPreferences
+        var outputFolder: String?
 
-        init(async: Bool = true, command: String? = nil, size: CGSize? = nil, resolutions: Resolutions? = nil, preferences: ExportPreferences? = nil) {
+        init(async: Bool = true, command: String? = nil, size: CGSize? = nil, resolutions: Resolutions? = nil, outputFolder: String? = nil, preferences: ExportPreferences? = nil) {
             self.async = async
             self.size = size
             self.resolutions = resolutions
+            self.outputFolder = outputFolder
             self.preferences = preferences ?? ExportPreferencesManager.shared.preferences
 
             if let cmd = command, !cmd.isEmpty {
@@ -54,7 +56,7 @@ class ExportManager {
 
         for atlas in atlases {
             for svgFile in atlas.svgFiles {
-                _ = ExportFile.create(atlas: atlas, svgFile: svgFile, size: arguments.size, resolutions: arguments.resolutions, atlasSizeOverridesSvgSize: arguments.preferences.folderSizeOverridesSvgSize).map { filesToExport.append($0) }
+                _ = ExportFile.create(atlas: atlas, svgFile: svgFile, size: arguments.size, resolutions: arguments.resolutions, targetFolder: arguments.outputFolder, atlasSizeOverridesSvgSize: arguments.preferences.folderSizeOverridesSvgSize).map { filesToExport.append($0) }
             }
         }
 
@@ -65,7 +67,7 @@ class ExportManager {
         prepareToExport()
 
         for svgFile in atlas.svgFiles {
-            _ = ExportFile.create(atlas: atlas, svgFile: svgFile, size: arguments.size, resolutions: arguments.resolutions, atlasSizeOverridesSvgSize: arguments.preferences.folderSizeOverridesSvgSize).map { filesToExport.append($0) }
+            _ = ExportFile.create(atlas: atlas, svgFile: svgFile, size: arguments.size, resolutions: arguments.resolutions, targetFolder: arguments.outputFolder, atlasSizeOverridesSvgSize: arguments.preferences.folderSizeOverridesSvgSize).map { filesToExport.append($0) }
         }
 
         _export()
@@ -73,7 +75,7 @@ class ExportManager {
 
     func export(atlas: Atlas, svgFile: SVGFile) {
         prepareToExport()
-        _ = ExportFile.create(atlas: atlas, svgFile: svgFile, size: arguments.size, resolutions: arguments.resolutions, atlasSizeOverridesSvgSize: arguments.preferences.folderSizeOverridesSvgSize).map { filesToExport.append($0) }
+        _ = ExportFile.create(atlas: atlas, svgFile: svgFile, size: arguments.size, resolutions: arguments.resolutions, targetFolder: arguments.outputFolder, atlasSizeOverridesSvgSize: arguments.preferences.folderSizeOverridesSvgSize).map { filesToExport.append($0) }
         _export()
     }
 

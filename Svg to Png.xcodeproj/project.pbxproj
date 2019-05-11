@@ -208,13 +208,13 @@
 		DE5090AC222B31BF00577122 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				DE52FC1E2286242800A77EDC /* FileManager.swift */,
 				DEECEFEA2220171100A9026F /* NSAlert.swift */,
 				DE7DE98F222BE2AB009A2345 /* NSOutlineView.swift */,
 				DE7DE991222BE3B8009A2345 /* NSTextView.swift */,
 				DE0284862233109900C163F6 /* Set.swift */,
 				DE7398522235C4FF00D87AC3 /* String.swift */,
 				DECE6BE32236A089009590EF /* URL.swift */,
-				DE52FC1E2286242800A77EDC /* FileManager.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";

@@ -30,7 +30,6 @@ struct ExportFile: CustomStringConvertible {
     var size: CGSize {
         get {
             return CGSize(width: width, height: height)
-            
         }
         set {
             width = Int(newValue.width)
@@ -41,7 +40,6 @@ struct ExportFile: CustomStringConvertible {
     var originalSize: CGSize {
         get {
             return CGSize(width: originalWidth, height: originalHeight)
-            
         }
         set {
             originalWidth = Int(newValue.width)
@@ -54,16 +52,20 @@ struct ExportFile: CustomStringConvertible {
         return "Error exporting \(inputURL?.abbreviatingWithTildeInPath ?? "(Unkown)"):\n\t\(errors.description)"
     }
 
-    static func create(atlas: Atlas, svgFile: SVGFile, size: CGSize? = nil, resolutions: Resolutions? = nil, atlasSizeOverridesSvgSize: Bool = false) -> [ExportFile] {
+    static func create(atlas: Atlas,
+                       svgFile: SVGFile,
+                       size: CGSize? = nil,
+                       resolutions: Resolutions? = nil,
+                       targetFolder: String? = nil,
+                       atlasSizeOverridesSvgSize: Bool = false) -> [ExportFile] {
         var results = [ExportFile]()
 
         let fileManager = FileManager.default
         let _resolutions: Resolutions
-        
+
         if let work = resolutions, !work.isEmpty {
             _resolutions = work
-        }
-        else {
+        } else {
             _resolutions = Resolutions.create(rawValue: svgFile.resolutions)
         }
 
@@ -85,8 +87,14 @@ struct ExportFile: CustomStringConvertible {
             } else if !fileManager.fileExists(atPath: exportFile.inputURL!.path) {
                 errors.insert(.invalidInputFile)
             }
-
-            if atlas.outputFolder.isEmpty {
+            
+            if let target = targetFolder, !target.isEmpty {
+                outputFolder = URL(fileURLWithPath: target, isDirectory: false)
+                
+                if !fileManager.fileExists(atPath: outputFolder.path) {
+                    errors.insert(.invalidOutputFolder)
+                }
+            } else if atlas.outputFolder.isEmpty {
                 outputFolder = inputFolder
 
                 if atlas.folder.isEmpty {
@@ -101,22 +109,22 @@ struct ExportFile: CustomStringConvertible {
             }
 
             exportFile.outputURL = resolution.transformURL(url: outputFolder.appendingPathComponent(svgFile.outputFilename, isDirectory: false))
-            
+
             let svgSize = CGSize(width: svgFile.width, height: svgFile.height)
             let argSize = size ?? CGSize(width: 0, height: 0)
             let defaultSize = CGSize(width: atlas.defaultWidth, height: atlas.defaultHeight)
-            
+
             if !argSize.nonsense {
                 exportFile.size = argSize * resolution.multiplier
                 exportFile.originalSize = argSize
-            } else if atlasSizeOverridesSvgSize && !defaultSize.nonsense {
+            } else if atlasSizeOverridesSvgSize, !defaultSize.nonsense {
                 exportFile.size = defaultSize * resolution.multiplier
                 exportFile.originalSize = defaultSize
             } else {
                 exportFile.size = svgSize * resolution.multiplier
                 exportFile.originalSize = svgSize
             }
-            
+
             if exportFile.width <= 0 {
                 errors.insert(.invalidWidth)
             }
