@@ -18,7 +18,7 @@ struct CLIArguments {
 class CLI {
     //    MARK: - Constants
 
-    static let Version = "1.1.1"
+    static let Version = "1.1.2"
     static let Copyright = "Copyright © 2019 Todd Denlinger. All rights reserved."
 
     //    MARK: - Private Properties
@@ -50,7 +50,7 @@ class CLI {
 
         Console.write("\navailable export commands:")
         for (idx, command) in commands.enumerated() {
-            Console.write("\t\(idx)\t\(command.command)")
+            Console.write("\t\(idx+1)\t\(command.command)")
         }
     }
 
@@ -172,7 +172,7 @@ class CLI {
             guard !argument.isEmpty else { return true }
 
             if let index = Int(argument) {
-                _args.exportCommandIdx = index
+                _args.exportCommandIdx = index - 1
                 _args.options.insert(_currentOption)
                 return true
             }

@@ -40,7 +40,9 @@ enum OptionType: String, Option {
         case .resolutions:
             return "resolutions to export: \(flag) 1,2,3 or 2,3, 1 ...etc... \n\t\tdefault is to use the svg file's resolutions defined in the svg project"
         case .exportCommand:
-            return "the index of the export command to use when exporting: \(flag)3\n\t\tdefaults to the default defined in 'Svg to Png'"
+            return "the number of the export command to use when exporting: \(flag)3\n\t\tdefaults to the default defined in 'Svg to Png'"
+        case .outputFolder:
+            return "the folder where all png files are exported ... the default is the project folder's target folder"
         default:
             return "\(OptionType.unknown)"
         }
